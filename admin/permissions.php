@@ -19,13 +19,13 @@ switch ($op) {
         global $xoopsDB, $xoopsModule;
 
         $moduleHandler = xoops_getHandler('module');
-        $xoModule       = $moduleHandler->getByDirname('xjson');
+        $xoModule      = $moduleHandler->getByDirname('xjson');
 
         xoops_cp_header();
         adminmenu(5);
         // View Categories permissions
-        $item_list_view = array();
-        $block_view     = array();
+        $item_list_view = [];
+        $block_view     = [];
 
         $result_view = $xoopsDB->query('SELECT plugin_id, plugin_name FROM ' . $xoopsDB->prefix('json_plugins') . ' ');
         if ($xoopsDB->getRowsNum($result_view)) {
@@ -37,9 +37,9 @@ switch ($op) {
                                                                                                                . '/modules/'
                                                                                                                . $xoopsModule->dirname()
                                                                                                                . "/images/close12.gif alt='' /></a>"
-                                                                                                               . _XC_PERMISSIONSVIEWMAN
+                                                                                                               . _XJSON_PERMISSIONSVIEWMAN
                                                                                                                . "</h3><div id='toptable'><span style=\"color: #567; margin: 3px 0 0 0; font-size: small; display: block; \">"
-                                                                                                               . _XC_VIEW_FUNCTION
+                                                                                                               . _XJSON_VIEW_FUNCTION
                                                                                                                . '</span>');
                 $block_view[]            = $item_list_view;
                 foreach ($block_view as $itemlists) {
@@ -55,7 +55,7 @@ switch ($op) {
                  . "/images/close12.gif alt='' /></a>&nbsp;"
                  . _XCOAP_PERMISSIONSVIEWMAN
                  . "</h3><div id='toptable'><span style=\"color: #567; margin: 3px 0 0 0; font-size: small; display: block; \">"
-                 . _XC_NOPERMSSET
+                 . _XJSON_NOPERMSSET
                  . '</span>';
         }
         echo '</div>';

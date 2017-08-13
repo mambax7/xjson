@@ -4,38 +4,38 @@
  */
 function xoops_authentication_xsd()
 {
-    $xsd                                    = array();
+    $xsd                                    = [];
     $i                                      = 0;
-    $xsd['request'][$i]                     = array('name' => 'username', 'type' => 'string');
-    $xsd['request'][$i++]                   = array('name' => 'password', 'type' => 'string');
-    $data                                   = array();
-    $data[]                                 = array('name' => 'username', 'type' => 'string');
-    $data[]                                 = array('name' => 'password', 'type' => 'string');
+    $xsd['request'][$i]                     = ['name' => 'username', 'type' => 'string'];
+    $xsd['request'][$i++]                   = ['name' => 'password', 'type' => 'string'];
+    $data                                   = [];
+    $data[]                                 = ['name' => 'username', 'type' => 'string'];
+    $data[]                                 = ['name' => 'password', 'type' => 'string'];
     $xsd['request'][$i++]['items']['data']  = $data;
     $xsd['request'][$i]['items']['objname'] = 'auth';
 
     $i                   = 0;
-    $xsd['response'][$i] = array('name' => 'ERRNUM', 'type' => 'integer');
-    $data                = array();
-    $data[]              = array('name' => 'uid', 'type' => 'integer');
-    $data[]              = array('name' => 'uname', 'type' => 'string');
-    $data[]              = array('name' => 'email', 'type' => 'string');
-    $data[]              = array('name' => 'user_from', 'type' => 'string');
-    $data[]              = array('name' => 'name', 'type' => 'integer');
-    $data[]              = array('name' => 'url', 'type' => 'string');
-    $data[]              = array('name' => 'user_icq', 'type' => 'string');
-    $data[]              = array('name' => 'user_sig', 'type' => 'string');
-    $data[]              = array('name' => 'user_viewemail', 'type' => 'integer');
-    $data[]              = array('name' => 'user_aim', 'type' => 'string');
-    $data[]              = array('name' => 'user_yim', 'type' => 'string');
-    $data[]              = array('name' => 'user_msnm', 'type' => 'string');
-    $data[]              = array('name' => 'attachsig', 'type' => 'integer');
-    $data[]              = array('name' => 'timezone_offset', 'type' => 'string');
-    $data[]              = array('name' => 'notify_method', 'type' => 'integer');
-    $data[]              = array('name' => 'user_occ', 'type' => 'string');
-    $data[]              = array('name' => 'bio', 'type' => 'string');
-    $data[]              = array('name' => 'user_intrest', 'type' => 'string');
-    $data[]              = array('name' => 'user_mailok', 'type' => 'integer');
+    $xsd['response'][$i] = ['name' => 'ERRNUM', 'type' => 'integer'];
+    $data                = [];
+    $data[]              = ['name' => 'uid', 'type' => 'integer'];
+    $data[]              = ['name' => 'uname', 'type' => 'string'];
+    $data[]              = ['name' => 'email', 'type' => 'string'];
+    $data[]              = ['name' => 'user_from', 'type' => 'string'];
+    $data[]              = ['name' => 'name', 'type' => 'integer'];
+    $data[]              = ['name' => 'url', 'type' => 'string'];
+    $data[]              = ['name' => 'user_icq', 'type' => 'string'];
+    $data[]              = ['name' => 'user_sig', 'type' => 'string'];
+    $data[]              = ['name' => 'user_viewemail', 'type' => 'integer'];
+    $data[]              = ['name' => 'user_aim', 'type' => 'string'];
+    $data[]              = ['name' => 'user_yim', 'type' => 'string'];
+    $data[]              = ['name' => 'user_msnm', 'type' => 'string'];
+    $data[]              = ['name' => 'attachsig', 'type' => 'integer'];
+    $data[]              = ['name' => 'timezone_offset', 'type' => 'string'];
+    $data[]              = ['name' => 'notify_method', 'type' => 'integer'];
+    $data[]              = ['name' => 'user_occ', 'type' => 'string'];
+    $data[]              = ['name' => 'bio', 'type' => 'string'];
+    $data[]              = ['name' => 'user_intrest', 'type' => 'string'];
+    $data[]              = ['name' => 'user_mailok', 'type' => 'integer'];
     $i++;
     $xsd['response'][$i]['items']['data']    = $data;
     $xsd['response'][$i]['items']['objname'] = 'RESULT';
@@ -67,16 +67,16 @@ function xoops_authentication($username, $password, $auth)
         }
         if (!checkright(basename(__FILE__), $username, $password)) {
             mark_for_lock(basename(__FILE__), $username, $password);
-            return array('ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in');
+            return ['ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in'];
         }
     }
 
-    if ($auth['passhash'] != '') {
+    if ($auth['passhash'] !== '') {
         if ($auth['passhash'] != sha1(($auth['time'] - $auth['rand']) . $auth['username'] . $auth['password'])) {
-            return array('ERRNUM' => 4, 'ERRTXT' => 'No Passhash');
+            return ['ERRNUM' => 4, 'ERRTXT' => 'No Passhash'];
         }
     } else {
-        return array('ERRNUM' => 4, 'ERRTXT' => 'No Passhash');
+        return ['ERRNUM' => 4, 'ERRTXT' => 'No Passhash'];
     }
 
     require_once XOOPS_ROOT_PATH . '/class/auth/authfactory.php';
@@ -85,7 +85,7 @@ function xoops_authentication($username, $password, $auth)
     $user      = $xoopsAuth->authenticate(addslashes($auth['username']), addslashes($auth['password']));
 
     if (is_object($user)) {
-        $row = array(
+        $row = [
             'uid'             => $user->getVar('uid'),
             'uname'           => $user->getVar('uname'),
             'email'           => $user->getVar('email'),
@@ -105,12 +105,12 @@ function xoops_authentication($username, $password, $auth)
             'bio'             => $user->getVar('bio'),
             'user_intrest'    => $user->getVar('user_intrest'),
             'user_mailok'     => $user->getVar('user_mailok')
-        );
+        ];
     }
 
     if (!empty($row)) {
-        return array('ERRNUM' => 1, 'RESULT' => $row);
+        return ['ERRNUM' => 1, 'RESULT' => $row];
     } else {
-        return array('ERRNUM' => 3, 'ERRTXT' => _ERR_FUNCTION_FAIL);
+        return ['ERRNUM' => 3, 'ERRTXT' => _ERR_FUNCTION_FAIL];
     }
 }

@@ -4,30 +4,30 @@
  */
 function tableschemer_xsd()
 {
-    $xsd                                    = array();
+    $xsd                                    = [];
     $i                                      = 0;
-    $data                                   = array();
-    $data[]                                 = array('name' => 'username', 'type' => 'string');
-    $data[]                                 = array('name' => 'password', 'type' => 'string');
-    $data[]                                 = array('name' => 'update', 'type' => 'integer');
-    $data[]                                 = array('name' => 'post', 'type' => 'integer');
-    $data[]                                 = array('name' => 'retrieve', 'type' => 'integer');
-    $data[]                                 = array('name' => 'tablename', 'type' => 'string');
+    $data                                   = [];
+    $data[]                                 = ['name' => 'username', 'type' => 'string'];
+    $data[]                                 = ['name' => 'password', 'type' => 'string'];
+    $data[]                                 = ['name' => 'update', 'type' => 'integer'];
+    $data[]                                 = ['name' => 'post', 'type' => 'integer'];
+    $data[]                                 = ['name' => 'retrieve', 'type' => 'integer'];
+    $data[]                                 = ['name' => 'tablename', 'type' => 'string'];
     $xsd['request'][$i]['items']['data']    = $data;
     $xsd['request'][$i]['items']['objname'] = 'var';
 
-    $data                                    = array();
-    $data[]                                  = array('name' => 'table_id', 'type' => 'integer');
-    $data[]                                  = array('name' => 'field', 'type' => 'string');
-    $data[]                                  = array('name' => 'allowpost', 'type' => 'integer');
-    $data[]                                  = array('name' => 'allowretrieve', 'type' => 'integer');
-    $data[]                                  = array('name' => 'allowupdate', 'type' => 'integer');
-    $data[]                                  = array('name' => 'string', 'type' => 'integer');
-    $data[]                                  = array('name' => 'int', 'type' => 'integer');
-    $data[]                                  = array('name' => 'float', 'type' => 'integer');
-    $data[]                                  = array('name' => 'text', 'type' => 'integer');
-    $data[]                                  = array('name' => 'other', 'type' => 'integer');
-    $data[]                                  = array('name' => 'key', 'type' => 'integer');
+    $data                                    = [];
+    $data[]                                  = ['name' => 'table_id', 'type' => 'integer'];
+    $data[]                                  = ['name' => 'field', 'type' => 'string'];
+    $data[]                                  = ['name' => 'allowpost', 'type' => 'integer'];
+    $data[]                                  = ['name' => 'allowretrieve', 'type' => 'integer'];
+    $data[]                                  = ['name' => 'allowupdate', 'type' => 'integer'];
+    $data[]                                  = ['name' => 'string', 'type' => 'integer'];
+    $data[]                                  = ['name' => 'int', 'type' => 'integer'];
+    $data[]                                  = ['name' => 'float', 'type' => 'integer'];
+    $data[]                                  = ['name' => 'text', 'type' => 'integer'];
+    $data[]                                  = ['name' => 'other', 'type' => 'integer'];
+    $data[]                                  = ['name' => 'key', 'type' => 'integer'];
     $xsd['response'][$i]['items']['data']    = $data;
     $xsd['response'][$i]['items']['objname'] = 'items';
     return $xsd;
@@ -55,7 +55,7 @@ function tableschemer($var)
         }
         if (!checkright(basename(__FILE__), $username, $password)) {
             mark_for_lock(basename(__FILE__), $username, $password);
-            return array('ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in');
+            return ['ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in'];
         }
     }
     global $xoopsDB;
@@ -72,13 +72,13 @@ function tableschemer($var)
     } elseif ($var['id'] > 0) {
         $sql .= 'and tbl_id = ' . $var['id'];
     } else {
-        return array('ErrNum' => 2, 'ErrDesc' => 'Table Name or Table ID not specified');
+        return ['ErrNum' => 2, 'ErrDesc' => 'Table Name or Table ID not specified'];
     }
 
     $ret = $xoopsDB->query($sql);
-    $rtn = array();
+    $rtn = [];
     while ($row = $xoopsDB->fetchArray($ret)) {
-        $rtn[] = array(
+        $rtn[] = [
             'table_id'      => $row['tbl_id'],
             'field'         => $row['fieldname'],
             'allowpost'     => $row['allowpost'],
@@ -90,7 +90,7 @@ function tableschemer($var)
             'text'          => $row['text'],
             'key'           => $row['key'],
             'other'         => $row['other']
-        );
+        ];
     }
 
     global $xoopsModuleConfig;

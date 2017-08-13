@@ -5,16 +5,16 @@
  */
 function arpmacaddress_xsd()
 {
-    $xsd                  = array();
+    $xsd                  = [];
     $i                    = 0;
-    $xsd['request'][$i]   = array('name' => 'username', 'type' => 'string');
-    $xsd['request'][$i++] = array('name' => 'password', 'type' => 'string');
-    $xsd['request'][$i++] = array('name' => 'remoteaddress', 'type' => 'string');
+    $xsd['request'][$i]   = ['name' => 'username', 'type' => 'string'];
+    $xsd['request'][$i++] = ['name' => 'password', 'type' => 'string'];
+    $xsd['request'][$i++] = ['name' => 'remoteaddress', 'type' => 'string'];
 
     $i                     = 0;
-    $xsd['response'][$i]   = array('name' => 'ERRNUM', 'type' => 'integer');
-    $xsd['response'][$i++] = array('name' => 'RESULT', 'type' => 'string');
-    $xsd['response'][$i++] = array('name' => 'MACADDRESS', 'type' => 'string');
+    $xsd['response'][$i]   = ['name' => 'ERRNUM', 'type' => 'integer'];
+    $xsd['response'][$i++] = ['name' => 'RESULT', 'type' => 'string'];
+    $xsd['response'][$i++] = ['name' => 'MACADDRESS', 'type' => 'string'];
 
     return $xsd;
 }
@@ -47,7 +47,7 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
             }
             if (!checkright(basename(__FILE__), $username, $password)) {
                 mark_for_lock(basename(__FILE__), $username, $password);
-                return array('ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in');
+                return ['ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in'];
             }
         }
 
@@ -55,6 +55,6 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
         exec('arping -c 1 ' . $remoteaddress, $user_mac);
         $macaddress = substr($user_mac[1], strpos($user_mac[1], ':') - 2, '17');
 
-        return array('MACADDRESS' => $macaddress);
+        return ['MACADDRESS' => $macaddress];
     }
 }

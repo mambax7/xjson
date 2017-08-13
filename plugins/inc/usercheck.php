@@ -37,7 +37,7 @@ if (!defined('usercheck_inc')) {
          */
         function userCheck($uname, $email, $pass, $vpass)
         {
-            $configHandler  = xoops_getHandler('config');
+            $configHandler   = xoops_getHandler('config');
             $xoopsConfigUser = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
             $xoopsDB         = XoopsDatabaseFactory::getDatabaseConnection();
             $myts            = MyTextSanitizer::getInstance();
@@ -102,12 +102,12 @@ if (!defined('usercheck_inc')) {
                     $stop .= _US_EMAILTAKEN . '<br />';
                 }
             }
-            if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') {
+            if (!isset($pass) || $pass === '' || !isset($vpass) || $vpass === '') {
                 $stop .= _US_ENTERPWD . '<br />';
             }
             if (isset($pass) && ($pass != $vpass)) {
                 $stop .= _US_PASSNOTSAME . '<br />';
-            } elseif (($pass != '') && (strlen($pass) < $xoopsConfigUser['minpass'])) {
+            } elseif (($pass !== '') && (strlen($pass) < $xoopsConfigUser['minpass'])) {
                 $stop .= sprintf(_US_PWDTOOSHORT, $xoopsConfigUser['minpass']) . '<br />';
             }
             return $stop;

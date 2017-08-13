@@ -4,25 +4,25 @@
  */
 function retrievekeys_xsd()
 {
-    $xsd                                    = array();
+    $xsd                                    = [];
     $i                                      = 0;
-    $data                                   = array();
-    $data[]                                 = array('name' => 'username', 'type' => 'string');
-    $data[]                                 = array('name' => 'password', 'type' => 'string');
-    $data[]                                 = array('name' => 'tablename', 'type' => 'string');
-    $data[]                                 = array('name' => 'clause', 'type' => 'string');
-    $data[]                                 = array('name' => 'fieldid', 'type' => 'integer');
-    $data[]                                 = array('name' => 'tablename', 'type' => 'string');
-    $data[]                                 = array('name' => 'id', 'type' => 'integer');
+    $data                                   = [];
+    $data[]                                 = ['name' => 'username', 'type' => 'string'];
+    $data[]                                 = ['name' => 'password', 'type' => 'string'];
+    $data[]                                 = ['name' => 'tablename', 'type' => 'string'];
+    $data[]                                 = ['name' => 'clause', 'type' => 'string'];
+    $data[]                                 = ['name' => 'fieldid', 'type' => 'integer'];
+    $data[]                                 = ['name' => 'tablename', 'type' => 'string'];
+    $data[]                                 = ['name' => 'id', 'type' => 'integer'];
     $xsd['request'][$i]['items']['data']    = $data;
     $xsd['request'][$i]['items']['objname'] = 'var';
 
-    $data                                    = array();
-    $data[]                                  = array('name' => 'id', 'type' => 'integer');
-    $data_b                                  = array();
-    $data_b[]                                = array('name' => 'field', 'type' => 'string');
-    $data_b[]                                = array('name' => 'value', 'type' => 'string');
-    $data[]                                  = array('items' => array('data' => $data_b, 'objname' => 'data'));
+    $data                                    = [];
+    $data[]                                  = ['name' => 'id', 'type' => 'integer'];
+    $data_b                                  = [];
+    $data_b[]                                = ['name' => 'field', 'type' => 'string'];
+    $data_b[]                                = ['name' => 'value', 'type' => 'string'];
+    $data[]                                  = ['items' => ['data' => $data_b, 'objname' => 'data']];
     $xsd['response'][$i]['items']['data']    = $data;
     $xsd['response'][$i]['items']['objname'] = 'items';
 
@@ -51,7 +51,7 @@ function retrievekeys($var)
         }
         if (!checkright(basename(__FILE__), $username, $password)) {
             mark_for_lock(basename(__FILE__), $username, $password);
-            return array('ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in');
+            return ['ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in'];
         }
     }
     global $xoopsDB;
@@ -63,12 +63,12 @@ function retrievekeys($var)
         $sql    .= 'and tbl_id = ' . $var['id'];
         $tbl_id = $var['id'];
     } else {
-        return array('ErrNum' => 2, 'ErrDesc' => 'Table Name or Table ID not specified');
+        return ['ErrNum' => 2, 'ErrDesc' => 'Table Name or Table ID not specified'];
     }
 
     $ret = $xoopsDB->query($sql);
     $sql = 'SELECT ';
-    $tmp = array();
+    $tmp = [];
     while ($row = $xoopsDB->fetchArray($ret)) {
         $sql   .= '`' . $row['fieldname'] . '`';
         $tmp[] = $row['fieldname'];
@@ -84,24 +84,24 @@ function retrievekeys($var)
     }
     if ($var['clause'] == 1) {
         if (strpos(' ' . strtolower($var['clause']), 'union') > 0) {
-            return array('ErrNum' => 8, 'ErrDesc' => 'Union not accepted');
+            return ['ErrNum' => 8, 'ErrDesc' => 'Union not accepted'];
         }
         $sql .= ' WHERE `' . get_fieldname($var['fieldid'], $tbl_id) . '` ' . $var['clause'];
     }
 
     $ret = $xoopsDB->query($sql);
-    $rtn = array();
+    $rtn = [];
 
     while ($row = $xoopsDB->fetchArray($ret)) {
         $id++;
-        $tmp_b = array();
+        $tmp_b = [];
         foreach ($tmp as $result) {
-            $tmp_b[] = array('field' => $result, 'value' => $row[$result]);
+            $tmp_b[] = ['field' => $result, 'value' => $row[$result]];
         }
-        $rtn[] = array(
+        $rtn[] = [
             'id'   => $id,
             'data' => $tmp_b
-        );
+        ];
     }
 
     global $xoopsModuleConfig;

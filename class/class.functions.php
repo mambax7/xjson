@@ -5,7 +5,7 @@
  */
 class FunctionsHandler
 {
-    public $functions = array();
+    public $functions = [];
 
     /**
      * FunctionsHandler constructor.
@@ -20,8 +20,8 @@ class FunctionsHandler
      */
     public function GetServerExtensions()
     {
-        $files = array();
-        $f     = array();
+        $files = [];
+        $f     = [];
         $files = $this->getFileListAsArray(XOOPS_ROOT_PATH . '/modules/xjson/plugins/');
         static $f_count;
         static $f_buffer;
@@ -45,14 +45,14 @@ class FunctionsHandler
      */
     public function getDirListAsArray($dirname)
     {
-        $ignored = array();
-        $list    = array();
-        if (substr($dirname, -1) != '/') {
+        $ignored = [];
+        $list    = [];
+        if (substr($dirname, -1) !== '/') {
             $dirname .= '/';
         }
         if ($handle = opendir($dirname)) {
             while ($file = readdir($handle)) {
-                if (substr($file, 0, 1) == '.' || in_array(strtolower($file), $ignored)) {
+                if (0 === strpos($file, '.') || in_array(strtolower($file), $ignored)) {
                     continue;
                 }
                 if (is_dir($dirname . $file)) {
@@ -77,8 +77,8 @@ class FunctionsHandler
      */
     public function getFileListAsArray($dirname, $prefix = '')
     {
-        $filelist = array();
-        if (substr($dirname, -1) == '/') {
+        $filelist = [];
+        if (substr($dirname, -1) === '/') {
             $dirname = substr($dirname, 0, -1);
         }
         if (is_dir($dirname) && $handle = opendir($dirname)) {

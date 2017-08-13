@@ -4,17 +4,17 @@
  */
 function tablesforpost_xsd()
 {
-    $xsd                                    = array();
+    $xsd                                    = [];
     $i                                      = 0;
-    $data                                   = array();
-    $data[]                                 = array('name' => 'username', 'type' => 'string');
-    $data[]                                 = array('name' => 'password', 'type' => 'string');
+    $data                                   = [];
+    $data[]                                 = ['name' => 'username', 'type' => 'string'];
+    $data[]                                 = ['name' => 'password', 'type' => 'string'];
     $xsd['request'][$i]['items']['data']    = $data;
     $xsd['request'][$i]['items']['objname'] = 'var';
 
-    $data                                    = array();
-    $data[]                                  = array('name' => 'id', 'type' => 'integer');
-    $data[]                                  = array('name' => 'table', 'type' => 'string');
+    $data                                    = [];
+    $data[]                                  = ['name' => 'id', 'type' => 'integer'];
+    $data[]                                  = ['name' => 'table', 'type' => 'string'];
     $xsd['response'][$i]['items']['data']    = $data;
     $xsd['response'][$i]['items']['objname'] = 'items';
 
@@ -43,19 +43,19 @@ function tablesforpost($var)
         }
         if (!checkright(basename(__FILE__), $username, $password)) {
             mark_for_lock(basename(__FILE__), $username, $password);
-            return array('ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in');
+            return ['ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in'];
         }
     }
     global $xoopsDB;
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('json_tables') . ' WHERE allowpost = 1 AND visible = 1';
     $ret = $xoopsDB->query($sql);
-    $rtn = array();
+    $rtn = [];
     while ($row = $xoopsDB->fetchArray($ret)) {
         $t++;
-        $rtn[$t] = array(
+        $rtn[$t] = [
             'id'    => $row['tbl_id'],
             'table' => $row['tablename']
-        );
+        ];
     }
 
     global $xoopsModuleConfig;

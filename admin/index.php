@@ -30,10 +30,10 @@ switch ($op) {
         $sql = 'SELECT * FROM ' . $xoopsDB->prefix('json_tables') . " WHERE view = '0'";
         $ret = $xoopsDB->queryF($sql);
 
-        $form_sel = new XoopsThemeForm(_XC_SELECTTABLE, 'seltable', $_SERVER['PHP_SELF'] . '');
+        $form_sel = new XoopsThemeForm(_XJSON_SELECTTABLE, 'seltable', $_SERVER['PHP_SELF'] . '');
         $form_sel->setExtra("enctype='multipart/form-data'");
 
-        $table_sel = new XoopsFormSelect(_XC_SELECTTABLE . ':', 'select');
+        $table_sel = new XoopsFormSelect(_XJSON_SELECTTABLE . ':', 'select');
         $table_sel->setExtra('onchange="window.location=\'\'+this.options[this.selectedIndex].value"');
 
         while ($row = $xoopsDB->fetchArray($ret)) {
@@ -47,13 +47,13 @@ switch ($op) {
         $sql = 'SHOW FIELDS FROM ' . $xoopsDB->prefix(get_tablename($tbl_id));
         $ret = $xoopsDB->queryF($sql);
 
-        $form_fld = new XoopsThemeForm(_XC_FIELDOPTIONSFOR . ' ' . get_tablename($tbl_id), 'fields', $_SERVER['PHP_SELF'] . '');
+        $form_fld = new XoopsThemeForm(_XJSON_FIELDOPTIONSFOR . ' ' . get_tablename($tbl_id), 'fields', $_SERVER['PHP_SELF'] . '');
         $form_fld->setExtra("enctype='multipart/form-data'");
 
         $field  = 0;
         $tbldat = get_tableconfig(get_tablename($tbl_id));
 
-        $ele_tray = array();
+        $ele_tray = [];
 
         while (list($fieldname, $type, $null, $keytype, $tmp, $tmp) = $xoopsDB->fetchRow($ret)) {
             $field++;
@@ -76,7 +76,7 @@ switch ($op) {
                 $other = 1;
             }
 
-            if ($keytype == 'PRI') {
+            if ($keytype === 'PRI') {
                 $key = 1;
             }
             $tbldat = get_fieldconfig($fieldname, $tbl_id);
@@ -262,7 +262,7 @@ switch ($op) {
                     $ty  = $xoopsDB->queryF($sql);
             }
         }
-        redirect_header('index.php?op=fields&tbl_id=' . $tbl_id, 2, _XC_DATABASEUPDATED);
+        redirect_header('index.php?op=fields&tbl_id=' . $tbl_id, 2, _XJSON_DATABASEUPDATED);
         break;
 
     case 'savetables':
@@ -291,7 +291,7 @@ switch ($op) {
                     $ty  = $xoopsDB->queryF($sql);
             }
         }
-        redirect_header('index.php?op=tables', 2, _XC_DATABASEUPDATED);
+        redirect_header('index.php?op=tables', 2, _XJSON_DATABASEUPDATED);
         break;
 
     case 'saveviews':
@@ -320,7 +320,7 @@ switch ($op) {
                     $ty  = $xoopsDB->queryF($sql);
             }
         }
-        redirect_header('index.php?op=views', 2, _XC_DATABASEUPDATED);
+        redirect_header('index.php?op=views', 2, _XJSON_DATABASEUPDATED);
         break;
 
     case 'views':
@@ -328,8 +328,8 @@ switch ($op) {
         $sql = 'SHOW VIEWS FROM ' . XOOPS_DB_NAME . '';
         $ret = $xoopsDB->queryF($sql);
 
-        $ele_tray  = array();
-        $form_view = new XoopsThemeForm(_XC_VIEWSFOR . ' ' . XOOPS_DB_NAME, 'views', $_SERVER['PHP_SELF'] . '');
+        $ele_tray  = [];
+        $form_view = new XoopsThemeForm(_XJSON_VIEWSFOR . ' ' . XOOPS_DB_NAME, 'views', $_SERVER['PHP_SELF'] . '');
         $form_view->setExtra("enctype='multipart/form-data'");
 
         $field = 0;
@@ -397,7 +397,7 @@ switch ($op) {
                     $ty  = $xoopsDB->queryF($sql);
             }
         }
-        redirect_header('index.php?op=plugins', 2, _XC_SAVEDSUCCESSFUL);
+        redirect_header('index.php?op=plugins', 2, _XJSON_SAVEDSUCCESSFUL);
         break;
 
     case 'plugins':
@@ -406,7 +406,7 @@ switch ($op) {
         require_once __DIR__ . '/../class/class.functions.php';
         $funct = new FunctionsHandler($xoopsModuleConfig['wsdl']);
 
-        $FunctionDefine = array();
+        $FunctionDefine = [];
         foreach ($funct->GetServerExtensions() as $extension) {
             $phpcode = file_get_contents(XOOPS_ROOT_PATH . '/modules/xjson/plugins/' . $extension);
             ob_start();
@@ -419,8 +419,8 @@ switch ($op) {
             }
         }
 
-        $ele_tray    = array();
-        $form_plugin = new XoopsThemeForm(_XC_PLUGINAVAILABLE, 'plugins', $_SERVER['PHP_SELF'] . '');
+        $ele_tray    = [];
+        $form_plugin = new XoopsThemeForm(_XJSON_PLUGINAVAILABLE, 'plugins', $_SERVER['PHP_SELF'] . '');
         $form_plugin->setExtra("enctype='multipart/form-data'");
 
         $field = 0;
@@ -473,8 +473,8 @@ switch ($op) {
         $sql = 'SHOW TABLES FROM ' . XOOPS_DB_NAME . " LIKE '" . XOOPS_DB_PREFIX . "\_%'";
         $ret = $xoopsDB->queryF($sql);
 
-        $ele_tray    = array();
-        $form_tables = new XoopsThemeForm(_XC_TABLESAVAILABLE . ' ' . XOOPS_DB_NAME, 'tables', $_SERVER['PHP_SELF'] . '');
+        $ele_tray    = [];
+        $form_tables = new XoopsThemeForm(_XJSON_TABLESAVAILABLE . ' ' . XOOPS_DB_NAME, 'tables', $_SERVER['PHP_SELF'] . '');
         $form_tables->setExtra("enctype='multipart/form-data'");
 
         $field = 0;

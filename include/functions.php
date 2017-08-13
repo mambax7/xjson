@@ -29,8 +29,8 @@ if (!function_exists('adminMenu')) {
         /* Nice buttons styles */
         global $xoopsConfig, $xoopsModule;
         $moduleHandler = xoops_getHandler('module');
-        $xoModule       = $moduleHandler->getByDirname('xjson');
-        $dirname        = $xoModule->getVar('dirname');
+        $xoModule      = $moduleHandler->getByDirname('xjson');
+        $dirname       = $xoModule->getVar('dirname');
         echo "
     	<style type='text/css'>
 		#form {float:left; width:100%; background: #e7e7e7 url('" . XOOPS_URL . "/modules/$dirname/images/bg.gif') repeat-x left bottom; font-size:93%; line-height:normal; border-bottom: 1px solid black; border-top: 1px solid black; border-left: 1px solid black; border-right: 1px solid black;}
@@ -52,9 +52,9 @@ if (!function_exists('adminMenu')) {
 
         // global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig;
 
-        $myts =  MyTextSanitizer::getInstance();
+        $myts = MyTextSanitizer::getInstance();
 
-        $tblColors = array();
+        $tblColors = [];
         // $adminmenu=array();
         if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
             include_once XOOPS_ROOT_PATH . '/modules/xcurl/language/' . $xoopsConfig['language'] . '/modinfo.php';

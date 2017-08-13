@@ -4,22 +4,22 @@
  */
 function post_xsd()
 {
-    $xsd          = array();
+    $xsd          = [];
     $i            = 0;
-    $data_a       = array();
-    $data_a[$i]   = array('name' => 'username', 'type' => 'string');
-    $data_a[$i++] = array('name' => 'password', 'type' => 'string');
-    $data_a[$i++] = array('name' => 'tablename', 'type' => 'string');
-    $data         = array();
-    $data[]       = array('name' => 'field', 'type' => 'string');
-    $data[]       = array('name' => 'value', 'type' => 'string');
+    $data_a       = [];
+    $data_a[$i]   = ['name' => 'username', 'type' => 'string'];
+    $data_a[$i++] = ['name' => 'password', 'type' => 'string'];
+    $data_a[$i++] = ['name' => 'tablename', 'type' => 'string'];
+    $data         = [];
+    $data[]       = ['name' => 'field', 'type' => 'string'];
+    $data[]       = ['name' => 'value', 'type' => 'string'];
     $i++;
     $data_a[$i]['items']['data']            = $data;
     $data_a[$i]['items']['objname']         = 'data';
     $i                                      = 0;
     $xsd['request'][$i]['items']['data']    = $data;
     $xsd['request'][$i]['items']['objname'] = 'var';
-    $xsd['response'][]                      = array('name' => 'insert_id', 'type' => 'double');
+    $xsd['response'][]                      = ['name' => 'insert_id', 'type' => 'double'];
 
     return $xsd;
 }
@@ -46,7 +46,7 @@ function post($var)
         }
         if (!checkright(basename(__FILE__), $username, $password)) {
             mark_for_lock(basename(__FILE__), $username, $password);
-            return array('ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in');
+            return ['ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in'];
         }
     }
     global $xoopsDB;
@@ -55,11 +55,11 @@ function post($var)
     } elseif ($var['id'] > 0) {
         $tbl_id = $var['id'];
     } else {
-        return array('ErrNum' => 2, 'ErrDesc' => 'Table Name or Table ID not specified');
+        return ['ErrNum' => 2, 'ErrDesc' => 'Table Name or Table ID not specified'];
     }
 
     if (!validate($tbl_id, $var['data'], 'allowpost')) {
-        return array('ErrNum' => 1, 'ErrDesc' => 'Not all fields are allowed posting');
+        return ['ErrNum' => 1, 'ErrDesc' => 'Not all fields are allowed posting'];
     } else {
         $sql = 'INSERT INTO ' . $xoopsDB->prefix(get_tablename($tbl_id));
         foreach ($var['data'] as $data) {
@@ -74,6 +74,6 @@ function post($var)
         }
         //		echo $sql." (".substr($sql_b,0,strlen($str_b)-1).") VALUES (".substr($sql_c,0,strlen($str_c)-1).")";
         $rt = $xoopsDB->queryF($sql . ' (' . substr($sql_b, 0, strlen($str_b) - 1) . ') VALUES (' . substr($sql_c, 0, strlen($str_c) - 1) . ')');
-        return array('insert_id' => $xoopsDB->getInsertId($rt));
+        return ['insert_id' => $xoopsDB->getInsertId($rt)];
     }
 }

@@ -26,5 +26,5 @@ if (is_object($xoopsUser)) {
     redirect_header(XOOPS_URL . '/', 1, _NOPERM);
     exit();
 }
-$myts =  MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 error_reporting(E_ALL);

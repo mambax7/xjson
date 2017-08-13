@@ -5,7 +5,7 @@
  */
 function obj2array($objects)
 {
-    $ret = array();
+    $ret = [];
     foreach ($objects as $key => $value) {
         if (is_a($value, 'stdClass')) {
             $ret[$key] = (array)obj2array($value);
@@ -19,7 +19,7 @@ function obj2array($objects)
 }
 
 global $xoopsModuleConfig, $xoopsModule;
-$ttlresult = array();
+$ttlresult = [];
 
 xoops_load('xoopscache');
 
@@ -32,7 +32,7 @@ if (!function_exists('json_encode')) {
 
 $funct = new FunctionsHandler();
 
-$FunctionDefine = array();
+$FunctionDefine = [];
 foreach ($funct->GetServerExtensions() as $extension) {
     global $xoopsDB;
     $sql = 'SELECT count(*) rc FROM ' . $xoopsDB->prefix('json_plugins') . " WHERE active = 1 AND plugin_file = '" . $extension . "'";
@@ -58,7 +58,7 @@ foreach ($FunctionDefine as $id => $func) {
         }
 
         if (!$result = XoopsCache::read('xjson_' . $opfunc . '_' . sha1(implode(':', $opdata)))) {
-            $tmp = array();
+            $tmp = [];
             if (!empty($opfunc)) {
                 $fields = 0;
                 foreach ($opxsd['request'] as $ii => $request) {
