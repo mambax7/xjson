@@ -1,30 +1,33 @@
 <?php
+/**
+ * @return array
+ */
 function tableschemer_xsd()
 {
     $xsd                                    = array();
     $i                                      = 0;
     $data                                   = array();
-    $data[]                                 = array("name" => "username", "type" => "string");
-    $data[]                                 = array("name" => "password", "type" => "string");
-    $data[]                                 = array("name" => "update", "type" => "integer");
-    $data[]                                 = array("name" => "post", "type" => "integer");
-    $data[]                                 = array("name" => "retrieve", "type" => "integer");
-    $data[]                                 = array("name" => "tablename", "type" => "string");
+    $data[]                                 = array('name' => 'username', 'type' => 'string');
+    $data[]                                 = array('name' => 'password', 'type' => 'string');
+    $data[]                                 = array('name' => 'update', 'type' => 'integer');
+    $data[]                                 = array('name' => 'post', 'type' => 'integer');
+    $data[]                                 = array('name' => 'retrieve', 'type' => 'integer');
+    $data[]                                 = array('name' => 'tablename', 'type' => 'string');
     $xsd['request'][$i]['items']['data']    = $data;
     $xsd['request'][$i]['items']['objname'] = 'var';
 
     $data                                    = array();
-    $data[]                                  = array("name" => "table_id", "type" => "integer");
-    $data[]                                  = array("name" => "field", "type" => "string");
-    $data[]                                  = array("name" => "allowpost", "type" => "integer");
-    $data[]                                  = array("name" => "allowretrieve", "type" => "integer");
-    $data[]                                  = array("name" => "allowupdate", "type" => "integer");
-    $data[]                                  = array("name" => "string", "type" => "integer");
-    $data[]                                  = array("name" => "int", "type" => "integer");
-    $data[]                                  = array("name" => "float", "type" => "integer");
-    $data[]                                  = array("name" => "text", "type" => "integer");
-    $data[]                                  = array("name" => "other", "type" => "integer");
-    $data[]                                  = array("name" => "key", "type" => "integer");
+    $data[]                                  = array('name' => 'table_id', 'type' => 'integer');
+    $data[]                                  = array('name' => 'field', 'type' => 'string');
+    $data[]                                  = array('name' => 'allowpost', 'type' => 'integer');
+    $data[]                                  = array('name' => 'allowretrieve', 'type' => 'integer');
+    $data[]                                  = array('name' => 'allowupdate', 'type' => 'integer');
+    $data[]                                  = array('name' => 'string', 'type' => 'integer');
+    $data[]                                  = array('name' => 'int', 'type' => 'integer');
+    $data[]                                  = array('name' => 'float', 'type' => 'integer');
+    $data[]                                  = array('name' => 'text', 'type' => 'integer');
+    $data[]                                  = array('name' => 'other', 'type' => 'integer');
+    $data[]                                  = array('name' => 'key', 'type' => 'integer');
     $xsd['response'][$i]['items']['data']    = $data;
     $xsd['response'][$i]['items']['objname'] = 'items';
     return $xsd;
@@ -39,6 +42,10 @@ function tableschemer_wsdl_service()
 }
 
 // Define the method as a PHP function
+/**
+ * @param $var
+ * @return array|bool
+ */
 function tableschemer($var)
 {
     global $xoopsModuleConfig;
@@ -48,24 +55,24 @@ function tableschemer($var)
         }
         if (!checkright(basename(__FILE__), $username, $password)) {
             mark_for_lock(basename(__FILE__), $username, $password);
-            return array('ErrNum' => 9, "ErrDesc" => 'No Permission for plug-in');
+            return array('ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in');
         }
     }
     global $xoopsDB;
-    $sql = "SELECT * FROM " . $xoopsDB->prefix('json_fields') . " WHERE visible = 1 ";
+    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('json_fields') . ' WHERE visible = 1 ';
     if ($var['post'] = 1) {
-        $sql .= "and allowpost = 1 ";
+        $sql .= 'and allowpost = 1 ';
     } elseif ($var['retrieve'] = 1) {
-        $sql .= "and allowretrieve = 1 ";
+        $sql .= 'and allowretrieve = 1 ';
     } elseif ($var['update'] = 1) {
-        $sql .= "and allowupdate = 1 ";
+        $sql .= 'and allowupdate = 1 ';
     }
     if (strlen($var['tablename']) > 0) {
-        $sql .= "and tbl_id = " . get_tableid($var['tablename']);
+        $sql .= 'and tbl_id = ' . get_tableid($var['tablename']);
     } elseif ($var['id'] > 0) {
-        $sql .= "and tbl_id = " . $var['id'];
+        $sql .= 'and tbl_id = ' . $var['id'];
     } else {
-        return array('ErrNum' => 2, "ErrDesc" => 'Table Name or Table ID not specified');
+        return array('ErrNum' => 2, 'ErrDesc' => 'Table Name or Table ID not specified');
     }
 
     $ret = $xoopsDB->query($sql);

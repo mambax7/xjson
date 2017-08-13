@@ -1,17 +1,20 @@
 <?php
+/**
+ * @return array
+ */
 function tablesforpost_xsd()
 {
     $xsd                                    = array();
     $i                                      = 0;
     $data                                   = array();
-    $data[]                                 = array("name" => "username", "type" => "string");
-    $data[]                                 = array("name" => "password", "type" => "string");
+    $data[]                                 = array('name' => 'username', 'type' => 'string');
+    $data[]                                 = array('name' => 'password', 'type' => 'string');
     $xsd['request'][$i]['items']['data']    = $data;
     $xsd['request'][$i]['items']['objname'] = 'var';
 
     $data                                    = array();
-    $data[]                                  = array("name" => "id", "type" => "integer");
-    $data[]                                  = array("name" => "table", "type" => "string");
+    $data[]                                  = array('name' => 'id', 'type' => 'integer');
+    $data[]                                  = array('name' => 'table', 'type' => 'string');
     $xsd['response'][$i]['items']['data']    = $data;
     $xsd['response'][$i]['items']['objname'] = 'items';
 
@@ -27,6 +30,10 @@ function tablesforpost_wsdl_service()
 }
 
 // Define the method as a PHP function
+/**
+ * @param $var
+ * @return array|bool|void
+ */
 function tablesforpost($var)
 {
     global $xoopsModuleConfig;
@@ -36,11 +43,11 @@ function tablesforpost($var)
         }
         if (!checkright(basename(__FILE__), $username, $password)) {
             mark_for_lock(basename(__FILE__), $username, $password);
-            return array('ErrNum' => 9, "ErrDesc" => 'No Permission for plug-in');
+            return array('ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in');
         }
     }
     global $xoopsDB;
-    $sql = "SELECT * FROM " . $xoopsDB->prefix('json_tables') . " WHERE allowpost = 1 AND visible = 1";
+    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('json_tables') . ' WHERE allowpost = 1 AND visible = 1';
     $ret = $xoopsDB->query($sql);
     $rtn = array();
     while ($row = $xoopsDB->fetchArray($ret)) {

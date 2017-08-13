@@ -1,44 +1,47 @@
 <?php
-include(XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/usercheck.php');
-include(XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/authcheck.php');
-include(XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/siteinfocheck.php');
-include(XOOPS_ROOT_PATH . '/class/xoopsmailer.php');
-include(XOOPS_ROOT_PATH . '/class/xoopsuser.php');
+include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/usercheck.php';
+include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/authcheck.php';
+include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/siteinfocheck.php';
+include XOOPS_ROOT_PATH . '/class/xoopsmailer.php';
+include XOOPS_ROOT_PATH . '/class/xoopsuser.php';
 
+/**
+ * @return array
+ */
 function xoops_create_user_xsd()
 {
     $xsd      = array();
     $i        = 0;
     $data     = array();
-    $data[]   = array("name" => "username", "type" => "string");
-    $data[]   = array("name" => "password", "type" => "string");
+    $data[]   = array('name' => 'username', 'type' => 'string');
+    $data[]   = array('name' => 'password', 'type' => 'string');
     $datab    = array();
-    $datab[]  = array("name" => "user_viewemail", "type" => "integer");
-    $datab[]  = array("name" => "uname", "type" => "string");
-    $datab[]  = array("name" => "email", "type" => "string");
-    $datab[]  = array("name" => "url", "type" => "string");
-    $datab[]  = array("name" => "actkey", "type" => "string");
-    $datab[]  = array("name" => "pass", "type" => "string");
-    $datab[]  = array("name" => "timezone_offset", "type" => "string");
-    $datab[]  = array("name" => "user_mailok", "type" => "integer");
-    $datab[]  = array("name" => "passhash", "type" => "string");
-    $datab[]  = array("name" => "rand", "type" => "integer");
-    $data[]   = array("items" => array("data" => $datab, "objname" => "user"));
+    $datab[]  = array('name' => 'user_viewemail', 'type' => 'integer');
+    $datab[]  = array('name' => 'uname', 'type' => 'string');
+    $datab[]  = array('name' => 'email', 'type' => 'string');
+    $datab[]  = array('name' => 'url', 'type' => 'string');
+    $datab[]  = array('name' => 'actkey', 'type' => 'string');
+    $datab[]  = array('name' => 'pass', 'type' => 'string');
+    $datab[]  = array('name' => 'timezone_offset', 'type' => 'string');
+    $datab[]  = array('name' => 'user_mailok', 'type' => 'integer');
+    $datab[]  = array('name' => 'passhash', 'type' => 'string');
+    $datab[]  = array('name' => 'rand', 'type' => 'integer');
+    $data[]   = array('items' => array('data' => $datab, 'objname' => 'user'));
     $data_c   = array();
-    $data_c[] = array("name" => "sitename", "type" => "string");
-    $data_c[] = array("name" => "adminmail", "type" => "string");
-    $data_c[] = array("name" => "xoops_url", "type" => "string");
-    $data[]   = array("items" => array("data" => $datab, "objname" => "siteinfo"));
+    $data_c[] = array('name' => 'sitename', 'type' => 'string');
+    $data_c[] = array('name' => 'adminmail', 'type' => 'string');
+    $data_c[] = array('name' => 'xoops_url', 'type' => 'string');
+    $data[]   = array('items' => array('data' => $datab, 'objname' => 'siteinfo'));
 
     $i++;
     $xsd['request'][$i]['items']['data']    = $data;
     $xsd['request'][$i]['items']['objname'] = 'var';
     $i                                      = 0;
-    $xsd['response'][$i]                    = array("name" => "ERRNUM", "type" => "integer");
+    $xsd['response'][$i]                    = array('name' => 'ERRNUM', 'type' => 'integer');
     $data                                   = array();
-    $data[]                                 = array("name" => "id", "type" => "integer");
-    $data[]                                 = array("name" => "user", "type" => "string");
-    $data[]                                 = array("name" => "text", "type" => "string");
+    $data[]                                 = array('name' => 'id', 'type' => 'integer');
+    $data[]                                 = array('name' => 'user', 'type' => 'string');
+    $data[]                                 = array('name' => 'text', 'type' => 'string');
     $i++;
     $xsd['response'][$i]['items']['data']    = $data;
     $xsd['response'][$i]['items']['objname'] = 'RESULT';
@@ -54,9 +57,16 @@ function xoops_create_user_wsdl_service()
 {
 }
 
+/**
+ * @param $username
+ * @param $password
+ * @param $user
+ * @param $siteinfo
+ * @return array|mixed
+ */
 function xoops_create_user($username, $password, $user, $siteinfo)
 {
-    xoops_load("userUtility");
+    xoops_load('userUtility');
 
     global $xoopsModuleConfig, $xoopsConfig;
 
@@ -66,16 +76,16 @@ function xoops_create_user($username, $password, $user, $siteinfo)
         }
         if (!checkright(basename(__FILE__), $username, $password)) {
             mark_for_lock(basename(__FILE__), $username, $password);
-            return array('ErrNum' => 9, "ErrDesc" => 'No Permission for plug-in');
+            return array('ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in');
         }
     }
 
     if ($user['passhash'] != '') {
         if ($user['passhash'] != sha1(($user['time'] - $user['rand']) . $user['uname'] . $user['pass'])) {
-            return array("ERRNUM" => 4, "ERRTXT" => 'No Passhash');
+            return array('ERRNUM' => 4, 'ERRTXT' => 'No Passhash');
         }
     } else {
-        return array("ERRNUM" => 4, "ERRTXT" => 'No Passhash');
+        return array('ERRNUM' => 4, 'ERRTXT' => 'No Passhash');
     }
 
     foreach ($user as $k => $l) {
@@ -122,14 +132,14 @@ function xoops_create_user($username, $password, $user, $siteinfo)
             }
 
             if (!$member_handler->insertUser($newuser, true)) {
-                $return = array('state' => 1, "text" => _US_REGISTERNG);
+                $return = array('state' => 1, 'text' => _US_REGISTERNG);
             } else {
                 $newid = $newuser->getVar('uid');
                 if (!$member_handler->addUserToGroup(XOOPS_GROUP_USERS, $newid)) {
-                    $return = array('state' => 1, "text" => _US_REGISTERNG);
+                    $return = array('state' => 1, 'text' => _US_REGISTERNG);
                 }
                 if ($xoopsConfigUser['activation_type'] == 1) {
-                    $return = array('state' => 2, "user" => $uname);
+                    $return = array('state' => 2, 'user' => $uname);
                 }
                 // Sending notification email to user for self activation
                 if ($xoopsConfigUser['activation_type'] == 0) {
@@ -138,15 +148,15 @@ function xoops_create_user($username, $password, $user, $siteinfo)
                     $xoopsMailer->setTemplate('register.tpl');
                     $xoopsMailer->assign('SITENAME', $siteinfo['sitename']);
                     $xoopsMailer->assign('ADMINMAIL', $siteinfo['adminmail']);
-                    $xoopsMailer->assign('SITEURL', XOOPS_URL . "/");
+                    $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
                     $xoopsMailer->setToUsers(new XoopsUser($newid));
                     $xoopsMailer->setFromEmail($siteinfo['adminmail']);
                     $xoopsMailer->setFromName($siteinfo['sitename']);
                     $xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
                     if (!$xoopsMailer->send()) {
-                        $return = array('state' => 1, "text" => _US_YOURREGMAILNG);
+                        $return = array('state' => 1, 'text' => _US_YOURREGMAILNG);
                     } else {
-                        $return = array('state' => 1, "text" => _US_YOURREGISTERED);
+                        $return = array('state' => 1, 'text' => _US_YOURREGISTERED);
                     }
                     // Sending notification email to administrator for activation
                 } elseif ($xoopsConfigUser['activation_type'] == 2) {
@@ -163,16 +173,16 @@ function xoops_create_user($username, $password, $user, $siteinfo)
                 }
                 $xoopsMailer->assign('SITENAME', $siteinfo['sitename']);
                 $xoopsMailer->assign('ADMINMAIL', $siteinfo['adminmail']);
-                $xoopsMailer->assign('SITEURL', $siteinfo['xoops_url'] . "/");
+                $xoopsMailer->assign('SITEURL', $siteinfo['xoops_url'] . '/');
                 $member_handler =& xoops_getHandler('member');
                 $xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['activation_group']));
                 $xoopsMailer->setFromEmail($siteinfo['adminmail']);
                 $xoopsMailer->setFromName($siteinfo['sitename']);
                 $xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
                 if (!$xoopsMailer->send()) {
-                    $return = array('state' => 1, "text" => _US_YOURREGMAILNG);
+                    $return = array('state' => 1, 'text' => _US_YOURREGMAILNG);
                 } else {
-                    $return = array('state' => 1, "text" => _US_YOURREGISTERED2);
+                    $return = array('state' => 1, 'text' => _US_YOURREGISTERED2);
                 }
             }
             if ($xoopsConfigUser['new_user_notify'] == 1 && !empty($xoopsConfigUser['new_user_notify_group'])) {
@@ -197,7 +207,7 @@ function xoops_create_user($username, $password, $user, $siteinfo)
 
             if (!$ch = curl_init(str_replace('soap', 'ban', XORTIFY_API_URI))) {
                 trigger_error('Could not intialise CURLSERIAL file: ' . XORTIFY_API_URI);
-                return array("ERRNUM" => 1, "RESULT" => $return);
+                return array('ERRNUM' => 1, 'RESULT' => $return);
             }
             $cookies = XOOPS_VAR_PATH . '/cache/xoops_cache/authcurl_' . md5(XORTIFY_API_URI) . '.cookie';
 
@@ -212,16 +222,16 @@ function xoops_create_user($username, $password, $user, $siteinfo)
             if (strpos(strtolower($data), 'solve puzzel') > 0) {
                 $sc     = new soapclient(null, array('location' => XORTIFY_API_URI, 'uri' => XORTIFY_API_URI));
                 $result = $sc->__soapCall('xoops_create_user', array(
-                                                                 "username" => $username,
-                                                                 "password" => $password,
-                                                                 'user'     => $user,
-                                                                 'siteinfo' => $siteinfo
-                                                             ));
+                    'username' => $username,
+                    'password' => $password,
+                    'user'     => $user,
+                    'siteinfo' => $siteinfo
+                ));
             }
 
-            return array("ERRNUM" => 1, "RESULT" => $return);
+            return array('ERRNUM' => 1, 'RESULT' => $return);
         } else {
-            return array("ERRNUM" => 1, "RESULT" => array('state' => 1, 'text' => userCheck($uname, $email, $pass, $pass)));
+            return array('ERRNUM' => 1, 'RESULT' => array('state' => 1, 'text' => userCheck($uname, $email, $pass, $pass)));
         }
     }
 }

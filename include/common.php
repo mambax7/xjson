@@ -1,8 +1,13 @@
 <?php
+/**
+ * @param $username
+ * @param $password
+ * @return bool
+ */
 function validateuser($username, $password)
 {
     global $xoopsDB;
-    $sql = "select * from " . $xoopsDB->prefix('users') . " WHERE uname = '$username' and pass = " . (strlen($password) == 32 && strtolower($password) == $password ? "'$password'" : "md5('$password')");
+    $sql = 'select * from ' . $xoopsDB->prefix('users') . " WHERE uname = '$username' and pass = " . (strlen($password) == 32 && strtolower($password) == $password ? "'$password'" : "md5('$password')");
     $ret = $xoopsDB->query($sql);
     if (!$xoopsDB->getRowsNum($ret)) {
         return false;
@@ -11,10 +16,15 @@ function validateuser($username, $password)
     }
 }
 
+/**
+ * @param $username
+ * @param $password
+ * @return bool
+ */
 function user_uid($username, $password)
 {
     global $xoopsDB;
-    $sql = "select uid from " . $xoopsDB->prefix('users') . " WHERE uname = '$username' and pass = " . (strlen($password) == 32 && strtolower($password) == $password ? "'$password'" : "md5('$password')");
+    $sql = 'select uid from ' . $xoopsDB->prefix('users') . " WHERE uname = '$username' and pass = " . (strlen($password) == 32 && strtolower($password) == $password ? "'$password'" : "md5('$password')");
     $ret = $xoopsDB->query($sql);
     if (!$xoopsDB->getRowsNum($ret)) {
         return false;
@@ -24,17 +34,23 @@ function user_uid($username, $password)
     }
 }
 
+/**
+ * @param $tbl_id
+ * @param $data
+ * @param $function
+ * @return bool
+ */
 function validate($tbl_id, $data, $function)
 {
     global $xoopsDB;
-    $sql  = "select * from " . $xoopsDB->prefix('json_tables') . " WHERE tablename = '" . get_tablename($tbl_id) . "' and $function = 1";
+    $sql  = 'select * from ' . $xoopsDB->prefix('json_tables') . " WHERE tablename = '" . get_tablename($tbl_id) . "' and $function = 1";
     $ret  = $xoopsDB->query($sql);
     $pass = true;
     if (!$xoopsDB->getRowsNum($ret)) {
         $pass = false;
     } else {
         foreach ($data as $row) {
-            $sql = "select * from " . $xoopsDB->prefix('json_fields') . " WHERE tbl_id = '$tbl_id' and $function = 1 and fieldname = '" . $row['field'] . "'";
+            $sql = 'select * from ' . $xoopsDB->prefix('json_fields') . " WHERE tbl_id = '$tbl_id' and $function = 1 and fieldname = '" . $row['field'] . "'";
             $ret = $xoopsDB->query($sql);
             if (!$xoopsDB->getRowsNum($ret) && !is_fieldkey($row['field'], $tbl_id)) {
                 $pass = false;
@@ -45,6 +61,12 @@ function validate($tbl_id, $data, $function)
     return $pass;
 }
 
+/**
+ * @param $function_file
+ * @param $username
+ * @param $password
+ * @return mixed
+ */
 function checkright($function_file, $username, $password)
 {
     $uid            = user_uid($username, $password);
@@ -55,13 +77,13 @@ function checkright($function_file, $username, $password)
         $rUser          = new XoopsUser($uid);
         $gperm_handler  =& xoops_getHandler('groupperm');
         $groups         = is_object($rUser) ? $rUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-        $sql            = "SELECT plugin_id FROM " . $xoopsDB->prefix('json_plugins') . " WHERE plugin_file = '" . addslashes($function_file) . "'";
+        $sql            = 'SELECT plugin_id FROM ' . $xoopsDB->prefix('json_plugins') . " WHERE plugin_file = '" . addslashes($function_file) . "'";
         $ret            = $xoopsDB->queryF($sql);
         $row            = $xoopsDB->fetchArray($ret);
         $item_id        = $row['plugin_id'];
         $modid          = $xoModule->getVar('mid');
         $online_handler =& xoops_getHandler('online');
-        $online_handler->write($uid, $username, time(), $modid, (string)$_SERVER["REMOTE_ADDR"]);
+        $online_handler->write($uid, $username, time(), $modid, (string)$_SERVER['REMOTE_ADDR']);
         $member_handler =& xoops_getHandler('member');
         @ini_set('session.gc_maxlifetime', $xoopsConfig['session_expire'] * 60);
         session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
@@ -76,7 +98,7 @@ function checkright($function_file, $username, $password)
         global $xoopsDB, $xoopsModule;
         $gperm_handler =& xoops_getHandler('groupperm');
         $groups        = array(XOOPS_GROUP_ANONYMOUS);
-        $sql           = "SELECT plugin_id FROM " . $xoopsDB->prefix('json_plugins') . " WHERE plugin_file = '" . addslashes($function_file) . "'";
+        $sql           = 'SELECT plugin_id FROM ' . $xoopsDB->prefix('json_plugins') . " WHERE plugin_file = '" . addslashes($function_file) . "'";
         $ret           = $xoopsDB->queryF($sql);
         $row           = $xoopsDB->fetchArray($ret);
         $item_id       = $row['plugin_id'];
@@ -85,37 +107,55 @@ function checkright($function_file, $username, $password)
     }
 }
 
+/**
+ * @param $tablename
+ * @return mixed
+ */
 function get_tableid($tablename)
 {
     global $xoopsDB;
-    $sql = "SELECT * FROM " . $xoopsDB->prefix('json_tables') . " WHERE tablename = '$tablename'";
+    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('json_tables') . " WHERE tablename = '$tablename'";
     $ret = $xoopsDB->query($sql);
     $row = $xoopsDB->fetchArray($ret);
     return $row['tbl_id'];
 }
 
+/**
+ * @param $tableid
+ * @return mixed
+ */
 function get_tablename($tableid)
 {
     global $xoopsDB;
-    $sql = "SELECT * FROM " . $xoopsDB->prefix('json_tables') . " WHERE tbl_id = '$tableid'";
+    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('json_tables') . " WHERE tbl_id = '$tableid'";
     $ret = $xoopsDB->query($sql);
     $row = $xoopsDB->fetchArray($ret);
     return $row['tablename'];
 }
 
+/**
+ * @param $fld_id
+ * @param $tbl_id
+ * @return mixed
+ */
 function get_fieldname($fld_id, $tbl_id)
 {
     global $xoopsDB;
-    $sql = "SELECT * FROM " . $xoopsDB->prefix('json_fields') . " WHERE tbl_id = '$tbl_id' and fld_id = '$fld_id'";
+    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('json_fields') . " WHERE tbl_id = '$tbl_id' and fld_id = '$fld_id'";
     $ret = $xoopsDB->query($sql);
     $row = $xoopsDB->fetchArray($ret);
     return $row['fieldname'];
 }
 
+/**
+ * @param $fieldname
+ * @param $tbl_id
+ * @return bool
+ */
 function is_fieldkey($fieldname, $tbl_id)
 {
     global $xoopsDB;
-    $sql = "SELECT * FROM " . $xoopsDB->prefix('json_fields') . " WHERE tbl_id = '$tbl_id' and fieldname = '$fieldname' and `key` = 1";
+    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('json_fields') . " WHERE tbl_id = '$tbl_id' and fieldname = '$fieldname' and `key` = 1";
     //echo $sql."\n";
     $ret = $xoopsDB->query($sql);
     if (!$xoopsDB->getRowsNum($ret)) {
@@ -126,13 +166,17 @@ function is_fieldkey($fieldname, $tbl_id)
 }
 
 if (!function_exists('xoops_isIPv6')) {
-    function xoops_isIPv6($ip = "")
+    /**
+     * @param string $ip
+     * @return bool
+     */
+    function xoops_isIPv6($ip = '')
     {
-        if ($ip == "") {
+        if ($ip == '') {
             return false;
         }
 
-        if (substr_count($ip, ":") > 0) {
+        if (substr_count($ip, ':') > 0) {
             return true;
         } else {
             return false;
@@ -141,6 +185,10 @@ if (!function_exists('xoops_isIPv6')) {
 }
 
 if (!function_exists('xoops_getUserIP')) {
+    /**
+     * @param bool $ip
+     * @return array
+     */
     function xoops_getUserIP($ip = false)
     {
         $ret = array();
@@ -153,10 +201,10 @@ if (!function_exists('xoops_getUserIP')) {
         }
         $ret['sessionid'] = session_id();
         if (!$ip) {
-            if ($_SERVER["HTTP_X_FORWARDED_FOR"] != "") {
-                $ip                  = (string)$_SERVER["HTTP_X_FORWARDED_FOR"];
+            if ($_SERVER['HTTP_X_FORWARDED_FOR'] != '') {
+                $ip                  = (string)$_SERVER['HTTP_X_FORWARDED_FOR'];
                 $ret['is_proxied']   = true;
-                $proxy_ip            = $_SERVER["REMOTE_ADDR"];
+                $proxy_ip            = $_SERVER['REMOTE_ADDR'];
                 $ret['network-addy'] = @gethostbyaddr($ip);
                 $ret['long']         = @ip2long($ip);
                 if (xoops_isIPv6($ip)) {
@@ -168,7 +216,7 @@ if (!function_exists('xoops_getUserIP')) {
                 }
             } else {
                 $ret['is_proxied']   = false;
-                $ip                  = (string)$_SERVER["REMOTE_ADDR"];
+                $ip                  = (string)$_SERVER['REMOTE_ADDR'];
                 $ret['network-addy'] = @gethostbyaddr($ip);
                 $ret['long']         = @ip2long($ip);
                 if (xoops_isIPv6($ip)) {
@@ -194,6 +242,12 @@ if (!function_exists('xoops_getUserIP')) {
     }
 }
 
+/**
+ * @param $function_file
+ * @param $username
+ * @param $password
+ * @return array|bool
+ */
 function check_for_lock($function_file, $username, $password)
 {
     xoops_load('cache');
@@ -205,7 +259,7 @@ function check_for_lock($function_file, $username, $password)
                 || $ret['made'] < ((time() - $GLOBALS['xoopsModuleConfig']['lock_seconds']) + mt_rand(1, $GLOBALS['xoopsModuleConfig']['lock_random_seed']))) {
                 unset($result[$id]);
             } elseif ($ret['md5'] == $userip['md5']) {
-                $retn = array('ErrNum' => 9, "ErrDesc" => 'No Permission for plug-in');
+                $retn = array('ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in');
             }
         }
         XoopsCache::delete('lock_' . $function_file . '_' . $username);
@@ -214,6 +268,12 @@ function check_for_lock($function_file, $username, $password)
     }
 }
 
+/**
+ * @param $function_file
+ * @param $username
+ * @param $password
+ * @return array
+ */
 function mark_for_lock($function_file, $username, $password)
 {
     xoops_load('cache');
@@ -223,11 +283,11 @@ function mark_for_lock($function_file, $username, $password)
         $result[] = $userip;
         XoopsCache::delete('lock_' . $function_file . '_' . $username);
         XoopsCache::write('lock_' . $function_file . '_' . $username, $result, $GLOBALS['cache_seconds']);
-        return array('ErrNum' => 9, "ErrDesc" => 'No Permission for plug-in');
+        return array('ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in');
     } else {
         $result[] = $userip;
         XoopsCache::delete('lock_' . $function_file . '_' . $username);
         XoopsCache::write('lock_' . $function_file . '_' . $username, $result, $GLOBALS['cache_seconds']);
-        return array('ErrNum' => 9, "ErrDesc" => 'No Permission for plug-in');
+        return array('ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in');
     }
 }

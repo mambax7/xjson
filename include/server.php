@@ -1,4 +1,8 @@
 <?php
+/**
+ * @param $objects
+ * @return array
+ */
 function obj2array($objects)
 {
     $ret = array();
@@ -19,10 +23,10 @@ $ttlresult = array();
 
 xoops_load('xoopscache');
 
-require_once(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/class.functions.php');
-require_once('common.php');
+require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/class.functions.php';
+require_once 'common.php';
 if (!function_exists('json_encode')) {
-    require_once('JSON.php');
+    require_once 'JSON.php';
     $json = new Services_JSON();
 }
 
@@ -31,11 +35,11 @@ $funct = new FunctionsHandler();
 $FunctionDefine = array();
 foreach ($funct->GetServerExtensions() as $extension) {
     global $xoopsDB;
-    $sql = "SELECT count(*) rc FROM " . $xoopsDB->prefix('json_plugins') . " WHERE active = 1 AND plugin_file = '" . $extension . "'";
+    $sql = 'SELECT count(*) rc FROM ' . $xoopsDB->prefix('json_plugins') . " WHERE active = 1 AND plugin_file = '" . $extension . "'";
     $ret = $xoopsDB->query($sql);
     $row = $xoopsDB->fetchArray($ret);
     if ($row['rc'] == 1) {
-        require_once(XOOPS_ROOT_PATH . '/modules/xjson/plugins/' . $extension);
+        require_once XOOPS_ROOT_PATH . '/modules/xjson/plugins/' . $extension;
         $FunctionDefine[] = substr($extension, 0, strlen($extension) - 4);
     }
 }
@@ -65,10 +69,10 @@ foreach ($FunctionDefine as $id => $func) {
                         } elseif (!empty($field['name']) && !empty($field['type'])) {
                             switch ($field['type']) {
                                 default:
-                                case "string":
+                                case 'string':
                                     $tmp[$fields] = (string)$opdata[$field['name']];
                                     break;
-                                case "integer":
+                                case 'integer':
                                     $tmp[$fields] = (integer)$opdata[$field['name']];
                                     break;
                             }

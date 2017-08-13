@@ -1,5 +1,9 @@
 <?php
 if (!function_exists('check_siteinfo')) {
+    /**
+     * @param $siteinfo
+     * @return array
+     */
     function check_siteinfo($siteinfo)
     {
         global $xoopsConfig;

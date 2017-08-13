@@ -17,13 +17,13 @@ include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
 if (is_object($xoopsUser)) {
-    $xoopsModule = XoopsModule::getByDirname("xjson");
+    $xoopsModule = XoopsModule::getByDirname('xjson');
     if (!$xoopsUser->isAdmin($xoopsModule->mid())) {
-        redirect_header(XOOPS_URL . "/", 3, _NOPERM);
+        redirect_header(XOOPS_URL . '/', 3, _NOPERM);
         exit();
     }
 } else {
-    redirect_header(XOOPS_URL . "/", 1, _NOPERM);
+    redirect_header(XOOPS_URL . '/', 1, _NOPERM);
     exit();
 }
 $myts = &MyTextSanitizer::getInstance();

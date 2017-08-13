@@ -1,17 +1,20 @@
 <?php
 
+/**
+ * @return array
+ */
 function arpmacaddress_xsd()
 {
     $xsd                  = array();
     $i                    = 0;
-    $xsd['request'][$i]   = array("name" => "username", "type" => "string");
-    $xsd['request'][$i++] = array("name" => "password", "type" => "string");
-    $xsd['request'][$i++] = array("name" => "remoteaddress", "type" => "string");
+    $xsd['request'][$i]   = array('name' => 'username', 'type' => 'string');
+    $xsd['request'][$i++] = array('name' => 'password', 'type' => 'string');
+    $xsd['request'][$i++] = array('name' => 'remoteaddress', 'type' => 'string');
 
     $i                     = 0;
-    $xsd['response'][$i]   = array("name" => "ERRNUM", "type" => "integer");
-    $xsd['response'][$i++] = array("name" => "RESULT", "type" => "string");
-    $xsd['response'][$i++] = array("name" => "MACADDRESS", "type" => "string");
+    $xsd['response'][$i]   = array('name' => 'ERRNUM', 'type' => 'integer');
+    $xsd['response'][$i++] = array('name' => 'RESULT', 'type' => 'string');
+    $xsd['response'][$i++] = array('name' => 'MACADDRESS', 'type' => 'string');
 
     return $xsd;
 }
@@ -24,10 +27,16 @@ function arpmacaddress_wsdl_service()
 {
 }
 
-$ret = explode(" ", XOOPS_VERSION);
-$ver = explode(".", $ret[1]);
+$ret = explode(' ', XOOPS_VERSION);
+$ver = explode('.', $ret[1]);
 
 if ($ret[0] >= 2 && $ret[1] >= 3) {
+    /**
+     * @param $username
+     * @param $password
+     * @param $remoteaddress
+     * @return array|bool
+     */
     function arpmacaddress($username, $password, $remoteaddress)
     {
         global $xoopsModuleConfig, $xoopsConfig;
@@ -38,7 +47,7 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
             }
             if (!checkright(basename(__FILE__), $username, $password)) {
                 mark_for_lock(basename(__FILE__), $username, $password);
-                return array('ErrNum' => 9, "ErrDesc" => 'No Permission for plug-in');
+                return array('ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in');
             }
         }
 

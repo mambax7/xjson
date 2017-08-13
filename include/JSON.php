@@ -129,6 +129,7 @@ class Services_JSON
      *                                   By default, a deeply-nested resource will
      *                                   bubble up with an error, so all return values
      *                                   from encode() should be checked with isError()
+     * @return \Services_JSON
      */
     public function __construct($use = 0)
     {
@@ -352,28 +353,28 @@ class Services_JSON
                  */
 
                 // treat as a JSON object
-                if (is_array($var) && count($var) && (array_keys($var) !== range(0, sizeof($var) - 1))) {
+                if (is_array($var) && count($var) && (array_keys($var) !== range(0, count($var) - 1))) {
                     $properties = array_map(array($this, 'name_value'), array_keys($var), array_values($var));
 
                     foreach ($properties as $property) {
-                        if (Services_JSON::isError($property)) {
+                        if (self::isError($property)) {
                             return $property;
                         }
                     }
 
-                    return '{' . join(',', $properties) . '}';
+                    return '{' . implode(',', $properties) . '}';
                 }
 
                 // treat it like a regular array
                 $elements = array_map(array($this, 'encode'), $var);
 
                 foreach ($elements as $element) {
-                    if (Services_JSON::isError($element)) {
+                    if (self::isError($element)) {
                         return $element;
                     }
                 }
 
-                return '[' . join(',', $elements) . ']';
+                return '[' . implode(',', $elements) . ']';
 
             case 'object':
                 $vars = get_object_vars($var);
@@ -381,15 +382,15 @@ class Services_JSON
                 $properties = array_map(array($this, 'name_value'), array_keys($vars), array_values($vars));
 
                 foreach ($properties as $property) {
-                    if (Services_JSON::isError($property)) {
+                    if (self::isError($property)) {
                         return $property;
                     }
                 }
 
-                return '{' . join(',', $properties) . '}';
+                return '{' . implode(',', $properties) . '}';
 
             default:
-                return ($this->use & SERVICES_JSON_SUPPRESS_ERRORS) ? 'null' : new Services_JSON_Error(gettype($var) . " can not be encoded as JSON string");
+                return ($this->use & SERVICES_JSON_SUPPRESS_ERRORS) ? 'null' : new Services_JSON_Error(gettype($var) . ' can not be encoded as JSON string');
         }
     }
 
@@ -406,11 +407,11 @@ class Services_JSON
     {
         $encoded_value = $this->encode($value);
 
-        if (Services_JSON::isError($encoded_value)) {
+        if (self::isError($encoded_value)) {
             return $encoded_value;
         }
 
-        return $this->encode(strval($name)) . ':' . $encoded_value;
+        return $this->encode((string)$name) . ':' . $encoded_value;
     }
 
     /**
@@ -523,7 +524,7 @@ class Services_JSON
 
                             case preg_match('/\\\u[0-9A-F]{4}/i', substr($chrs, $c, 6)):
                                 // single, escaped unicode character
-                                $utf16 = chr(hexdec(substr($chrs, ($c + 2), 2))) . chr(hexdec(substr($chrs, ($c + 4), 2)));
+                                $utf16 = chr(hexdec(substr($chrs, $c + 2, 2))) . chr(hexdec(substr($chrs, $c + 4, 2)));
                                 $utf8  .= $this->utf162utf8($utf16);
                                 $c     += 5;
                                 break;
@@ -615,8 +616,8 @@ class Services_JSON
                         if (($c == $strlen_chrs) || (($chrs{$c} == ',') && ($top['what'] == SERVICES_JSON_SLICE))) {
                             // found a comma that is not inside a string, array, etc.,
                             // OR we've reached the end of the character list
-                            $slice = substr($chrs, $top['where'], ($c - $top['where']));
-                            array_push($stk, array('what' => SERVICES_JSON_SLICE, 'where' => ($c + 1), 'delim' => false));
+                            $slice = substr($chrs, $top['where'], $c - $top['where']);
+                            array_push($stk, array('what' => SERVICES_JSON_SLICE, 'where' => $c + 1, 'delim' => false));
                             //print("Found split at {$c}: ".substr($chrs, $top['where'], (1 + $c - $top['where']))."\n");
 
                             if (reset($stk) == SERVICES_JSON_IN_ARR) {
@@ -711,6 +712,9 @@ class Services_JSON
 
     /**
      * @todo Ultimately, this should just call PEAR::isError()
+     * @param      $data
+     * @param null $code
+     * @return bool
      */
     public function isError($data, $code = null)
     {
@@ -727,8 +731,19 @@ class Services_JSON
 }
 
 if (class_exists('PEAR_Error')) {
+    /**
+     * Class Services_JSON_Error
+     */
     class Services_JSON_Error extends PEAR_Error
     {
+        /**
+         * Services_JSON_Error constructor.
+         * @param string $message
+         * @param null   $code
+         * @param null   $mode
+         * @param null   $options
+         * @param null   $userinfo
+         */
         public function __construct(
             $message = 'unknown error',
             $code = null,
@@ -746,6 +761,14 @@ if (class_exists('PEAR_Error')) {
      */
     class Services_JSON_Error
     {
+        /**
+         * Services_JSON_Error constructor.
+         * @param string $message
+         * @param null   $code
+         * @param null   $mode
+         * @param null   $options
+         * @param null   $userinfo
+         */
         public function __construct(
             $message = 'unknown error',
             $code = null,

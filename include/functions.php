@@ -1,4 +1,8 @@
 <?php
+/**
+ * @param $object
+ * @return mixed
+ */
 function object2array($object)
 {
     if (is_object($object)) {
@@ -16,7 +20,10 @@ function object2array($object)
     return $array;
 }
 
-if (!function_exists("adminMenu")) {
+if (!function_exists('adminMenu')) {
+    /**
+     * @param int $currentoption
+     */
     function adminMenu($currentoption = 0)
     {
         /* Nice buttons styles */
@@ -57,33 +64,27 @@ if (!function_exists("adminMenu")) {
 
         echo "<table width=\"100%\" border='0'><tr><td>";
         echo "<div id='buttontop'>";
-        echo "<table style=\"width: 100%; padding: 0; \" cellspacing=\"0\"><tr>";
-        echo "<td style=\"width: 45%; font-size: 10px; text-align: left; color: #2F5376; padding: 0 6px; line-height: 18px;\"><a class=\"nobutton\" href=\""
-             . XOOPS_URL
-             . "/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod="
-             . $xoopsModule->getVar('mid')
-             . "\">"
-             . _PREFERENCES
-             . "</a></td>";
-        echo "<td style='font-size: 10px; text-align: right; color: #2F5376; padding: 0 6px; line-height: 18px;'><b>" . $myts->displayTarea($xoopsModule->name()) . "</td>";
-        echo "</tr></table>";
-        echo "</div>";
+        echo '<table style="width: 100%; padding: 0; " cellspacing="0"><tr>';
+        echo '<td style="width: 45%; font-size: 10px; text-align: left; color: #2F5376; padding: 0 6px; line-height: 18px;"><a class="nobutton" href="' . XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $xoopsModule->getVar('mid') . '">' . _PREFERENCES . '</a></td>';
+        echo "<td style='font-size: 10px; text-align: right; color: #2F5376; padding: 0 6px; line-height: 18px;'><b>" . $myts->displayTarea($xoopsModule->name()) . '</td>';
+        echo '</tr></table>';
+        echo '</div>';
         echo "<div id='buttonbar'>";
-        echo "<ul>";
+        echo '<ul>';
         foreach ($xoopsModule->getAdminMenu() as $key => $value) {
             $tblColors[$key]           = '';
             $tblColors[$currentoption] = 'current';
-            echo "<li id='" . $tblColors[$key] . "'><a href=\"" . XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/" . $value['link'] . "\"><span>" . $value['title'] . "</span></a></li>";
+            echo "<li id='" . $tblColors[$key] . "'><a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $value['link'] . '"><span>' . $value['title'] . '</span></a></li>';
         }
 
-        echo "</ul></div>";
-        echo "</td></tr>";
+        echo '</ul></div>';
+        echo '</td></tr>';
         echo "<tr'><td><div id='form'>";
     }
 
     function footer_adminMenu()
     {
-        echo "</div></td></tr>";
-        echo "</table>";
+        echo '</div></td></tr>';
+        echo '</table>';
     }
 }

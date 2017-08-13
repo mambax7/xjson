@@ -1,20 +1,23 @@
 <?php
-include(XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/authcheck.php');
+include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/authcheck.php';
 
+/**
+ * @return array
+ */
 function xoops_network_disclaimer_xsd()
 {
     $xsd    = array();
     $i      = 0;
     $data   = array();
-    $data[] = array("name" => "username", "type" => "string");
-    $data[] = array("name" => "password", "type" => "string");
+    $data[] = array('name' => 'username', 'type' => 'string');
+    $data[] = array('name' => 'password', 'type' => 'string');
     $i++;
     $xsd['request'][$i]['items']['data']    = $data;
     $xsd['request'][$i]['items']['objname'] = 'var';
 
     $i                   = 0;
-    $xsd['response'][$i] = array("name" => "ERRNUM", "type" => "integer");
-    $xsd['response'][$i] = array("name" => "RESULT", "type" => "string");
+    $xsd['response'][$i] = array('name' => 'ERRNUM', 'type' => 'integer');
+    $xsd['response'][$i] = array('name' => 'RESULT', 'type' => 'string');
 
     return $xsd;
 }
@@ -27,6 +30,11 @@ function xoops_network_disclaimer_wsdl_service()
 {
 }
 
+/**
+ * @param $username
+ * @param $password
+ * @return array|bool
+ */
 function xoops_network_disclaimer($username, $password)
 {
     global $xoopsModuleConfig, $xoopsConfig;
@@ -37,7 +45,7 @@ function xoops_network_disclaimer($username, $password)
         }
         if (!checkright(basename(__FILE__), $username, $password)) {
             mark_for_lock(basename(__FILE__), $username, $password);
-            return array('ErrNum' => 9, "ErrDesc" => 'No Permission for plug-in');
+            return array('ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in');
         }
     }
 
@@ -52,6 +60,6 @@ function xoops_network_disclaimer($username, $password)
         $config_handler  =& xoops_getHandler('config');
         $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
-        return array("ERRNUM" => 1, "RESULT" => $xoopsConfigUser['reg_disclaimer']);
+        return array('ERRNUM' => 1, 'RESULT' => $xoopsConfigUser['reg_disclaimer']);
     }
 }

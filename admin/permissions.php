@@ -1,6 +1,6 @@
 <?php
 
-include_once("admin_header.php");
+include_once 'admin_header.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
 $op = '';
@@ -14,7 +14,7 @@ foreach ($_GET as $k => $v) {
 }
 
 switch ($op) {
-    case "default":
+    case 'default':
     default:
         global $xoopsDB, $xoopsModule;
 
@@ -27,20 +27,20 @@ switch ($op) {
         $item_list_view = array();
         $block_view     = array();
 
-        $result_view = $xoopsDB->query("SELECT plugin_id, plugin_name FROM " . $xoopsDB->prefix("json_plugins") . " ");
+        $result_view = $xoopsDB->query('SELECT plugin_id, plugin_name FROM ' . $xoopsDB->prefix('json_plugins') . ' ');
         if ($xoopsDB->getRowsNum($result_view)) {
             while ($myrow_view = $xoopsDB->fetchArray($result_view)) {
                 $item_list_view['cid']   = $myrow_view['plugin_id'];
                 $item_list_view['title'] = $myrow_view['plugin_name'];
-                $form_view               = new XoopsGroupPermForm("", $xoModule->getVar('mid'), "plugin_call", "<img id='toptableicon' src="
+                $form_view               = new XoopsGroupPermForm('', $xoModule->getVar('mid'), 'plugin_call', "<img id='toptableicon' src="
                                                                                                                . XOOPS_URL
-                                                                                                               . "/modules/"
+                                                                                                               . '/modules/'
                                                                                                                . $xoopsModule->dirname()
                                                                                                                . "/images/close12.gif alt='' /></a>"
                                                                                                                . _XC_PERMISSIONSVIEWMAN
                                                                                                                . "</h3><div id='toptable'><span style=\"color: #567; margin: 3px 0 0 0; font-size: small; display: block; \">"
                                                                                                                . _XC_VIEW_FUNCTION
-                                                                                                               . "</span>");
+                                                                                                               . '</span>');
                 $block_view[]            = $item_list_view;
                 foreach ($block_view as $itemlists) {
                     $form_view->addItem($itemlists['cid'], $itemlists['title']);
@@ -50,15 +50,15 @@ switch ($op) {
         } else {
             echo "<img id='toptableicon' src="
                  . XOOPS_URL
-                 . "/modules/"
+                 . '/modules/'
                  . $xoModule->dirname()
                  . "/images/close12.gif alt='' /></a>&nbsp;"
                  . _XCOAP_PERMISSIONSVIEWMAN
                  . "</h3><div id='toptable'><span style=\"color: #567; margin: 3px 0 0 0; font-size: small; display: block; \">"
                  . _XC_NOPERMSSET
-                 . "</span>";
+                 . '</span>';
         }
-        echo "</div>";
+        echo '</div>';
 
         echo "<br />\n";
 }
