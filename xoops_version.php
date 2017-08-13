@@ -72,75 +72,78 @@ $modversion['hasMain'] = 1;
 // Smarty
 $modversion['use_smarty'] = 0;
 
-$i++;
-$modversion['config'][$i]['name']        = 'site_user_auth';
-$modversion['config'][$i]['title']       = '_XJSON_USERAUTH';
-$modversion['config'][$i]['description'] = '_XJSON_USERAUTHDESC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 1;
-
-$i++;
-$modversion['config'][$i]['name']        = 'lock_seconds';
-$modversion['config'][$i]['title']       = '_XJSON_SECONDS';
-$modversion['config'][$i]['description'] = '_XJSON_SECONDS_DESC';
-$modversion['config'][$i]['formtype']    = 'select';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 180;
-$modversion['config'][$i]['options']     = [
-    _XJSON_SECONDS_3600 => 3600,
-    _XJSON_SECONDS_1800 => 1800,
-    _XJSON_SECONDS_1200 => 1200,
-    _XJSON_SECONDS_600  => 600,
-    _XJSON_SECONDS_300  => 300,
-    _XJSON_SECONDS_180  => 180,
-    _XJSON_SECONDS_60   => 60,
-    _XJSON_SECONDS_30   => 30
+$modversion['config'][] = [
+    'name'        => 'site_user_auth',
+    'title'       => '_XJSON_USERAUTH',
+    'description' => '_XJSON_USERAUTHDESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 1,
+];
+$modversion['config'][] = [
+    'name'        => 'lock_seconds',
+    'title'       => '_XJSON_SECONDS',
+    'description' => '_XJSON_SECONDS_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 180,
+    'options'     => [
+        _XJSON_SECONDS_3600 => 3600,
+        _XJSON_SECONDS_1800 => 1800,
+        _XJSON_SECONDS_1200 => 1200,
+        _XJSON_SECONDS_600  => 600,
+        _XJSON_SECONDS_300  => 300,
+        _XJSON_SECONDS_180  => 180,
+        _XJSON_SECONDS_60   => 60,
+        _XJSON_SECONDS_30   => 30
+    ],
 ];
 
-$i++;
-
-$modversion['config'][$i]['name']        = 'function_cache';
-$modversion['config'][$i]['title']       = '_XJSON_FUNCTIONCACHE';
-$modversion['config'][$i]['description'] = '_XJSON_FUNCTIONCACHE_DESC';
-$modversion['config'][$i]['formtype']    = 'select';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 180;
-$modversion['config'][$i]['options']     = [
-    _XJSON_SECONDS_3600 => 3600,
-    _XJSON_SECONDS_1800 => 1800,
-    _XJSON_SECONDS_1200 => 1200,
-    _XJSON_SECONDS_600  => 600,
-    _XJSON_SECONDS_300  => 300,
-    _XJSON_SECONDS_180  => 180,
-    _XJSON_SECONDS_60   => 60,
-    _XJSON_SECONDS_30   => 30
+$modversion['config'][] = [
+    'name'        => 'function_cache',
+    'title'       => '_XJSON_FUNCTIONCACHE',
+    'description' => '_XJSON_FUNCTIONCACHE_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 180,
+    'options'     => [
+        _XJSON_SECONDS_3600 => 3600,
+        _XJSON_SECONDS_1800 => 1800,
+        _XJSON_SECONDS_1200 => 1200,
+        _XJSON_SECONDS_600  => 600,
+        _XJSON_SECONDS_300  => 300,
+        _XJSON_SECONDS_180  => 180,
+        _XJSON_SECONDS_60   => 60,
+        _XJSON_SECONDS_30   => 30
+    ],
 ];
 
 mt_srand(((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999));
 mt_srand(((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999));
-$i++;
-$modversion['config'][$i]['name']        = 'lock_random_seed';
-$modversion['config'][$i]['title']       = '_XJSON_USERANDOMLOCK';
-$modversion['config'][$i]['description'] = '_XJSON_USERANDOMLOCK_DESC';
-$modversion['config'][$i]['formtype']    = 'text';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = mt_rand(30, 170);
 
-$i++;
-$modversion['config'][$i]['name']        = 'cache_seconds';
-$modversion['config'][$i]['title']       = '_XJSON_SECONDSCACHE';
-$modversion['config'][$i]['description'] = '_XJSON_SECONDSCACHE_DESC';
-$modversion['config'][$i]['formtype']    = 'select';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 3600;
-$modversion['config'][$i]['options']     = [
-    _XJSON_SECONDS_3600 => 3600,
-    _XJSON_SECONDS_1800 => 1800,
-    _XJSON_SECONDS_1200 => 1200,
-    _XJSON_SECONDS_600  => 600,
-    _XJSON_SECONDS_300  => 300,
-    _XJSON_SECONDS_180  => 180,
-    _XJSON_SECONDS_60   => 60,
-    _XJSON_SECONDS_30   => 30
+$modversion['config'][] = [
+    'name'        => 'lock_random_seed',
+    'title'       => '_XJSON_USERANDOMLOCK',
+    'description' => '_XJSON_USERANDOMLOCK_DESC',
+    'formtype'    => 'text',
+    'valuetype'   => 'int',
+    'default'     => mt_rand(30, 170),
+];
+$modversion['config'][] = [
+    'name'        => 'cache_seconds',
+    'title'       => '_XJSON_SECONDSCACHE',
+    'description' => '_XJSON_SECONDSCACHE_DESC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 3600,
+    'options'     => [
+        _XJSON_SECONDS_3600 => 3600,
+        _XJSON_SECONDS_1800 => 1800,
+        _XJSON_SECONDS_1200 => 1200,
+        _XJSON_SECONDS_600  => 600,
+        _XJSON_SECONDS_300  => 300,
+        _XJSON_SECONDS_180  => 180,
+        _XJSON_SECONDS_60   => 60,
+        _XJSON_SECONDS_30   => 30
+    ],
 ];
