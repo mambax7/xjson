@@ -24,9 +24,9 @@ $ttlresult = array();
 xoops_load('xoopscache');
 
 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/class.functions.php';
-require_once 'common.php';
+require_once __DIR__ . '/common.php';
 if (!function_exists('json_encode')) {
-    require_once 'JSON.php';
+    require_once __DIR__ . '/JSON.php';
     $json = new Services_JSON();
 }
 

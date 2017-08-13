@@ -28,8 +28,8 @@ if (!function_exists('adminMenu')) {
     {
         /* Nice buttons styles */
         global $xoopsConfig, $xoopsModule;
-        $module_handler =& xoops_getHandler('module');
-        $xoModule       = $module_handler->getByDirname('xjson');
+        $moduleHandler = xoops_getHandler('module');
+        $xoModule       = $moduleHandler->getByDirname('xjson');
         $dirname        = $xoModule->getVar('dirname');
         echo "
     	<style type='text/css'>
@@ -52,7 +52,7 @@ if (!function_exists('adminMenu')) {
 
         // global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig;
 
-        $myts = &MyTextSanitizer::getInstance();
+        $myts =  MyTextSanitizer::getInstance();
 
         $tblColors = array();
         // $adminmenu=array();

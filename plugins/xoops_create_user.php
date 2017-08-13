@@ -96,17 +96,17 @@ function xoops_create_user($username, $password, $user, $siteinfo)
     include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
     $xoopsAuth =& XoopsAuthFactory::getAuthConnection($uname);
 
-    if (check_auth_class($xoopsAuth) == true) {
+    if (check_auth_class($xoopsAuth) === true) {
         $result = $xoopsAuth->create_user($user_viewemail, $uname, $email, $url, $actkey, $pass, $timezone_offset, $user_mailok, $siteinfo);
         return $result;
     } else {
         if (strlen(userCheck($uname, $email, $pass, $pass)) == 0) {
             global $xoopsConfig;
-            $config_handler  =& xoops_getHandler('config');
-            $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+            $configHandler  = xoops_getHandler('config');
+            $xoopsConfigUser = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
 
-            $member_handler =& xoops_getHandler('member');
-            $newuser        =& $member_handler->createUser();
+            $memberHandler = xoops_getHandler('member');
+            $newuser        = $memberHandler->createUser();
             $newuser->setVar('user_viewemail', $user_viewemail, true);
             $newuser->setVar('uname', $uname, true);
             $newuser->setVar('email', $email, true);
@@ -131,11 +131,11 @@ function xoops_create_user($username, $password, $user, $siteinfo)
                 $newuser->setVar('level', 1, true);
             }
 
-            if (!$member_handler->insertUser($newuser, true)) {
+            if (!$memberHandler->insertUser($newuser, true)) {
                 $return = array('state' => 1, 'text' => _US_REGISTERNG);
             } else {
                 $newid = $newuser->getVar('uid');
-                if (!$member_handler->addUserToGroup(XOOPS_GROUP_USERS, $newid)) {
+                if (!$memberHandler->addUserToGroup(XOOPS_GROUP_USERS, $newid)) {
                     $return = array('state' => 1, 'text' => _US_REGISTERNG);
                 }
                 if ($xoopsConfigUser['activation_type'] == 1) {
@@ -174,8 +174,8 @@ function xoops_create_user($username, $password, $user, $siteinfo)
                 $xoopsMailer->assign('SITENAME', $siteinfo['sitename']);
                 $xoopsMailer->assign('ADMINMAIL', $siteinfo['adminmail']);
                 $xoopsMailer->assign('SITEURL', $siteinfo['xoops_url'] . '/');
-                $member_handler =& xoops_getHandler('member');
-                $xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['activation_group']));
+                $memberHandler = xoops_getHandler('member');
+                $xoopsMailer->setToGroups($memberHandler->getGroup($xoopsConfigUser['activation_group']));
                 $xoopsMailer->setFromEmail($siteinfo['adminmail']);
                 $xoopsMailer->setFromName($siteinfo['sitename']);
                 $xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
@@ -188,8 +188,8 @@ function xoops_create_user($username, $password, $user, $siteinfo)
             if ($xoopsConfigUser['new_user_notify'] == 1 && !empty($xoopsConfigUser['new_user_notify_group'])) {
                 $xoopsMailer =& xoops_getMailer();
                 $xoopsMailer->useMail();
-                $member_handler =& xoops_getHandler('member');
-                $xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
+                $memberHandler = xoops_getHandler('member');
+                $xoopsMailer->setToGroups($memberHandler->getGroup($xoopsConfigUser['new_user_notify_group']));
                 $xoopsMailer->setFromEmail($siteinfo['adminmail']);
                 $xoopsMailer->setFromName($siteinfo['sitename']);
                 $xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT, $xoopsConfig['sitename']));

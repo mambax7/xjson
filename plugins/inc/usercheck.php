@@ -37,10 +37,10 @@ if (!defined('usercheck_inc')) {
          */
         function userCheck($uname, $email, $pass, $vpass)
         {
-            $config_handler  =& xoops_getHandler('config');
-            $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-            $xoopsDB         =& Database::getInstance();
-            $myts            =& MyTextSanitizer::getInstance();
+            $configHandler  = xoops_getHandler('config');
+            $xoopsConfigUser = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
+            $xoopsDB         = XoopsDatabaseFactory::getDatabaseConnection();
+            $myts            = MyTextSanitizer::getInstance();
             $stop            = '';
             if (!checkEmail($email)) {
                 $stop .= _US_INVALIDMAIL . '<br />';

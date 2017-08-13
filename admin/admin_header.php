@@ -8,9 +8,9 @@
  * Licence: GNU
  */
 error_reporting(E_ALL);
-include '../../../mainfile.php';
-include '../../../include/cp_header.php';
-include '../include/functions.php';
+include __DIR__ . '/../../../mainfile.php';
+include __DIR__ . '/../../../include/cp_header.php';
+include __DIR__ . '/../include/functions.php';
 
 include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
@@ -26,5 +26,5 @@ if (is_object($xoopsUser)) {
     redirect_header(XOOPS_URL . '/', 1, _NOPERM);
     exit();
 }
-$myts = &MyTextSanitizer::getInstance();
+$myts =  MyTextSanitizer::getInstance();
 error_reporting(E_ALL);

@@ -70,40 +70,40 @@ function validate($tbl_id, $data, $function)
 function checkright($function_file, $username, $password)
 {
     $uid            = user_uid($username, $password);
-    $module_handler = xoops_getHandler('module');
-    $xoModule       = $module_handler->getByDirname('xjson');
+    $moduleHandler = xoops_getHandler('module');
+    $xoModule       = $moduleHandler->getByDirname('xjson');
     if ($uid <> 0) {
         global $xoopsDB, $xoopsModule;
         $rUser          = new XoopsUser($uid);
-        $gperm_handler  =& xoops_getHandler('groupperm');
+        $gpermHandler  = xoops_getHandler('groupperm');
         $groups         = is_object($rUser) ? $rUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
         $sql            = 'SELECT plugin_id FROM ' . $xoopsDB->prefix('json_plugins') . " WHERE plugin_file = '" . addslashes($function_file) . "'";
         $ret            = $xoopsDB->queryF($sql);
         $row            = $xoopsDB->fetchArray($ret);
         $item_id        = $row['plugin_id'];
         $modid          = $xoModule->getVar('mid');
-        $online_handler =& xoops_getHandler('online');
-        $online_handler->write($uid, $username, time(), $modid, (string)$_SERVER['REMOTE_ADDR']);
-        $member_handler =& xoops_getHandler('member');
+        $onlineHandler = xoops_getHandler('online');
+        $onlineHandler->write($uid, $username, time(), $modid, (string)$_SERVER['REMOTE_ADDR']);
+        $memberHandler = xoops_getHandler('member');
         @ini_set('session.gc_maxlifetime', $xoopsConfig['session_expire'] * 60);
-        session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
+        session_set_saveHandler(array(&$sessHandler, 'open'), array(&$sessHandler, 'close'), array(&$sessHandler, 'read'), array(&$sessHandler, 'write'), array(&$sessHandler, 'destroy'), array(&$sessHandler, 'gc'));
         session_start();
         $_SESSION['xoopsUserId']     = $uid;
-        $GLOBALS['xoopsUser']        = &$member_handler->getUser($uid);
+        $GLOBALS['xoopsUser']        =  $memberHandler->getUser($uid);
         $_SESSION['xoopsUserGroups'] = $GLOBALS['xoopsUser']->getGroups();
-        $GLOBALS['sess_handler']->update_cookie();
+        $GLOBALS['sessHandler']->update_cookie();
 
-        return $gperm_handler->checkRight('plugin_call', $item_id, $groups, $modid);
+        return $gpermHandler->checkRight('plugin_call', $item_id, $groups, $modid);
     } else {
         global $xoopsDB, $xoopsModule;
-        $gperm_handler =& xoops_getHandler('groupperm');
+        $gpermHandler = xoops_getHandler('groupperm');
         $groups        = array(XOOPS_GROUP_ANONYMOUS);
         $sql           = 'SELECT plugin_id FROM ' . $xoopsDB->prefix('json_plugins') . " WHERE plugin_file = '" . addslashes($function_file) . "'";
         $ret           = $xoopsDB->queryF($sql);
         $row           = $xoopsDB->fetchArray($ret);
         $item_id       = $row['plugin_id'];
         $modid         = $xoModule->getVar('mid');
-        return $gperm_handler->checkRight('plugin_call', $item_id, $groups, $modid);
+        return $gpermHandler->checkRight('plugin_call', $item_id, $groups, $modid);
     }
 }
 

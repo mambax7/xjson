@@ -1,6 +1,6 @@
 <?php
 
-include_once 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
 $op = '';
@@ -18,8 +18,8 @@ switch ($op) {
     default:
         global $xoopsDB, $xoopsModule;
 
-        $module_handler = xoops_getHandler('module');
-        $xoModule       = $module_handler->getByDirname('xjson');
+        $moduleHandler = xoops_getHandler('module');
+        $xoModule       = $moduleHandler->getByDirname('xjson');
 
         xoops_cp_header();
         adminmenu(5);

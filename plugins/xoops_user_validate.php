@@ -74,7 +74,7 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
         include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
         $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($validate['uname']));
 
-        if (check_auth_class($xoopsAuth) == true) {
+        if (check_auth_class($xoopsAuth) === true) {
             $result = $xoopsAuth->validate($validate['uname'], $validate['email'], $validate['pass'], $validate['vpass']);
             return $result;
         } else {

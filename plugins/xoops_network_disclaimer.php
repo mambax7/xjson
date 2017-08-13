@@ -53,12 +53,12 @@ function xoops_network_disclaimer($username, $password)
     include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
     $xoopsAuth =& XoopsAuthFactory::getAuthConnection();
 
-    if (check_auth_class($xoopsAuth) == true) {
+    if (check_auth_class($xoopsAuth) === true) {
         $result = $xoopsAuth->network_disclaimer();
         return $result;
     } else {
-        $config_handler  =& xoops_getHandler('config');
-        $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+        $configHandler  = xoops_getHandler('config');
+        $xoopsConfigUser = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
 
         return array('ERRNUM' => 1, 'RESULT' => $xoopsConfigUser['reg_disclaimer']);
     }
