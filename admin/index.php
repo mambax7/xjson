@@ -30,10 +30,10 @@ switch ($op) {
         $sql = 'SELECT * FROM ' . $xoopsDB->prefix('json_tables') . " WHERE view = '0'";
         $ret = $xoopsDB->queryF($sql);
 
-        $form_sel = new XoopsThemeForm(_XJSON_SELECTTABLE, 'seltable', $_SERVER['PHP_SELF'] . '');
+        $form_sel = new XoopsThemeForm(_AM_XJSON_SELECTTABLE, 'seltable', $_SERVER['PHP_SELF'] . '');
         $form_sel->setExtra("enctype='multipart/form-data'");
 
-        $table_sel = new XoopsFormSelect(_XJSON_SELECTTABLE . ':', 'select');
+        $table_sel = new XoopsFormSelect(_AM_XJSON_SELECTTABLE . ':', 'select');
         $table_sel->setExtra('onchange="window.location=\'\'+this.options[this.selectedIndex].value"');
 
         while ($row = $xoopsDB->fetchArray($ret)) {
@@ -47,7 +47,7 @@ switch ($op) {
         $sql = 'SHOW FIELDS FROM ' . $xoopsDB->prefix(get_tablename($tbl_id));
         $ret = $xoopsDB->queryF($sql);
 
-        $form_fld = new XoopsThemeForm(_XJSON_FIELDOPTIONSFOR . ' ' . get_tablename($tbl_id), 'fields', $_SERVER['PHP_SELF'] . '');
+        $form_fld = new XoopsThemeForm(_AM_XJSON_FIELDOPTIONSFOR . ' ' . get_tablename($tbl_id), 'fields', $_SERVER['PHP_SELF'] . '');
         $form_fld->setExtra("enctype='multipart/form-data'");
 
         $field  = 0;
@@ -329,7 +329,7 @@ switch ($op) {
         $ret = $xoopsDB->queryF($sql);
 
         $ele_tray  = [];
-        $form_view = new XoopsThemeForm(_XJSON_VIEWSFOR . ' ' . XOOPS_DB_NAME, 'views', $_SERVER['PHP_SELF'] . '');
+        $form_view = new XoopsThemeForm(_AM_XJSON_VIEWSFOR . ' ' . XOOPS_DB_NAME, 'views', $_SERVER['PHP_SELF'] . '');
         $form_view->setExtra("enctype='multipart/form-data'");
 
         $field = 0;
@@ -420,7 +420,7 @@ switch ($op) {
         }
 
         $ele_tray    = [];
-        $form_plugin = new XoopsThemeForm(_XJSON_PLUGINAVAILABLE, 'plugins', $_SERVER['PHP_SELF'] . '');
+        $form_plugin = new XoopsThemeForm(_AM_XJSON_PLUGINAVAILABLE, 'plugins', $_SERVER['PHP_SELF'] . '');
         $form_plugin->setExtra("enctype='multipart/form-data'");
 
         $field = 0;
@@ -474,7 +474,7 @@ switch ($op) {
         $ret = $xoopsDB->queryF($sql);
 
         $ele_tray    = [];
-        $form_tables = new XoopsThemeForm(_XJSON_TABLESAVAILABLE . ' ' . XOOPS_DB_NAME, 'tables', $_SERVER['PHP_SELF'] . '');
+        $form_tables = new XoopsThemeForm(_AM_XJSON_TABLESAVAILABLE . ' ' . XOOPS_DB_NAME, 'tables', $_SERVER['PHP_SELF'] . '');
         $form_tables->setExtra("enctype='multipart/form-data'");
 
         $field = 0;

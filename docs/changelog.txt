@@ -1,0 +1,8 @@
+<h5>1.54 Beta 1  [NOT RELEASED]</h5>
+<hr>
+- standardization for XOOPS 2.5.9 (mamba)
+
+<h5>1.53  [2011-04-21]</h5>
+<hr>
+
+

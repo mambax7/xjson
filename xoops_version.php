@@ -24,19 +24,21 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------- //
 
-$modversion['name']        = 'X-JSON API';
-$modversion['version']     = 1.53;
-$modversion['releasedate'] = 'Thusday: 21 April 2011';
-$modversion['status']      = 'Stable';
-$modversion['author']      = 'Chronolabs Australia';
-$modversion['credits']     = 'Simon Roberts';
-$modversion['teammembers'] = 'Wishcraft';
-$modversion['license']     = 'GPL';
-$modversion['official']    = 1;
-$modversion['description'] = 'JSON API Server to exchange JSON Packages with external server.';
-$modversion['help']        = '';
-$modversion['image']       = 'images/xjson_slogo.png';
-$modversion['dirname']     = 'xjson';
+$modversion['version']       = 1.54;
+$modversion['module_status'] = 'Beta 1';
+$modversion['release_date']  = '2017/08/07';
+$modversion['name']          = 'X-JSON API';
+$modversion['releasedate']   = 'Thusday: 21 April 2011';
+$modversion['status']        = 'Stable';
+$modversion['author']        = 'Chronolabs Australia';
+$modversion['credits']       = 'Simon Roberts';
+$modversion['teammembers']   = 'Wishcraft';
+$modversion['license']       = 'GPL';
+$modversion['official']      = 1;
+$modversion['description']   = 'JSON API Server to exchange JSON Packages with external server.';
+$modversion['help']          = '';
+$modversion['image']         = 'images/xjson_slogo.png';
+$modversion['dirname']       = 'xjson';
 
 // All tables should not have any prefix!
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
@@ -62,9 +64,10 @@ $modversion['tables'][1] = 'json_fields';
 $modversion['tables'][2] = 'json_plugins';
 
 // Admin things
-$modversion['hasAdmin']   = 1;
-$modversion['adminindex'] = 'admin/index.php';
-$modversion['adminmenu']  = 'admin/menu.php';
+$modversion['hasAdmin']    = 1;
+$modversion['system_menu'] = 1;
+$modversion['adminindex']  = 'admin/index.php';
+$modversion['adminmenu']   = 'admin/menu.php';
 
 // Menu
 $modversion['hasMain'] = 1;
