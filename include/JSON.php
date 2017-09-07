@@ -749,8 +749,8 @@ if (class_exists('PEAR_Error')) {
             $code = null,
             $mode = null,
             $options = null,
-            $userinfo = null)
-        {
+            $userinfo = null
+        ) {
             parent::PEAR_Error($message, $code, $mode, $options, $userinfo);
         }
     }
@@ -774,8 +774,8 @@ if (class_exists('PEAR_Error')) {
             $code = null,
             $mode = null,
             $options = null,
-            $userinfo = null)
-        {
+            $userinfo = null
+        ) {
         }
     }
 }

@@ -24,4 +24,3 @@ $adminmenu[] = [
     'link'  => 'admin/permissions.php',
     'icon'  => 'images/permissions.png',
 ];
-
