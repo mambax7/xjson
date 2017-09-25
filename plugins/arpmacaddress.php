@@ -41,7 +41,7 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
     {
         global $xoopsModuleConfig, $xoopsConfig;
 
-        if ($xoopsModuleConfig['site_user_auth'] == 1) {
+        if (1 == $xoopsModuleConfig['site_user_auth']) {
             if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
                 return $ret;
             }

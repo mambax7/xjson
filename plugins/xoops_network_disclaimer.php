@@ -39,7 +39,7 @@ function xoops_network_disclaimer($username, $password)
 {
     global $xoopsModuleConfig, $xoopsConfig;
 
-    if ($xoopsModuleConfig['site_user_auth'] == 1) {
+    if (1 == $xoopsModuleConfig['site_user_auth']) {
         if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
             return $ret;
         }
@@ -53,7 +53,7 @@ function xoops_network_disclaimer($username, $password)
     include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
     $xoopsAuth = XoopsAuthFactory::getAuthConnection();
 
-    if (check_auth_class($xoopsAuth) === true) {
+    if (true === check_auth_class($xoopsAuth)) {
         $result = $xoopsAuth->network_disclaimer();
         return $result;
     } else {

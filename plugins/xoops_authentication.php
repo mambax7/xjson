@@ -61,7 +61,7 @@ function xoops_authentication($username, $password, $auth)
 {
     global $xoopsModuleConfig, $xoopsConfig;
 
-    if ($xoopsModuleConfig['site_user_auth'] == 1) {
+    if (1 == $xoopsModuleConfig['site_user_auth']) {
         if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
             return $ret;
         }
@@ -71,7 +71,7 @@ function xoops_authentication($username, $password, $auth)
         }
     }
 
-    if ($auth['passhash'] !== '') {
+    if ('' !== $auth['passhash']) {
         if ($auth['passhash'] != sha1(($auth['time'] - $auth['rand']) . $auth['username'] . $auth['password'])) {
             return ['ERRNUM' => 4, 'ERRTXT' => 'No Passhash'];
         }

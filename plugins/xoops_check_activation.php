@@ -54,7 +54,7 @@ function xoops_check_activation($username, $password, $user)
 {
     global $xoopsModuleConfig, $xoopsConfig;
 
-    if ($xoopsModuleConfig['site_user_auth'] == 1) {
+    if (1 == $xoopsModuleConfig['site_user_auth']) {
         if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
             return $ret;
         }
@@ -64,7 +64,7 @@ function xoops_check_activation($username, $password, $user)
         }
     }
 
-    if ($user['passhash'] !== '') {
+    if ('' !== $user['passhash']) {
         if ($user['passhash'] != sha1(($user['time'] - $user['rand']) . $user['uname'] . $user['actkey'])) {
             return ['ERRNUM' => 4, 'ERRTXT' => 'No Passhash'];
         }
@@ -82,7 +82,7 @@ function xoops_check_activation($username, $password, $user)
     include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
     $xoopsAuth =& XoopsAuthFactory::getAuthConnection(addslashes($uname));
 
-    if (check_auth_class($xoopsAuth) === true) {
+    if (true === check_auth_class($xoopsAuth)) {
         $result = $xoopsAuth->check_activation($uname, $actkey, $siteinfo);
         return $result;
     } else {
@@ -107,7 +107,7 @@ function xoops_check_activation($username, $password, $user)
                 if (false != $memberHandler->activateUser($thisuser)) {
                     $configHandler   = xoops_getHandler('config');
                     $xoopsConfigUser = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
-                    if ($xoopsConfigUser['activation_type'] == 2) {
+                    if (2 == $xoopsConfigUser['activation_type']) {
                         $myts        = MyTextSanitizer::getInstance();
                         $xoopsMailer =& xoops_getMailer();
                         $xoopsMailer->useMail();
@@ -126,7 +126,7 @@ function xoops_check_activation($username, $password, $user)
                         }
                     } else {
                         $local = explode(' @ ', $thisuser->getVar('user_intrest'));
-                        if ($local[0] == _US_USERREG) {
+                        if (_US_USERREG == $local[0]) {
                             $return = ['state' => _US_STATE_ONE, 'action' => 'redirect_header', 'url' => $local[1] . '/user.php', 'opt' => 5, 'text' => _US_ACTLOGIN, 'set' => false];
                         } else {
                             $return = ['state' => _US_STATE_ONE, 'action' => 'redirect_header', 'url' => 'user.php', 'opt' => 5, 'text' => _US_ACTLOGIN, 'set' => false];

@@ -37,7 +37,7 @@ function tablesforpost_wsdl_service()
 function tablesforpost($var)
 {
     global $xoopsModuleConfig;
-    if ($xoopsModuleConfig['site_user_auth'] == 1) {
+    if (1 == $xoopsModuleConfig['site_user_auth']) {
         if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
             return $ret;
         }
@@ -59,7 +59,7 @@ function tablesforpost($var)
     }
 
     global $xoopsModuleConfig;
-    if ($xoopsModuleConfig['site_user_auth'] == 1) {
+    if (1 == $xoopsModuleConfig['site_user_auth']) {
         if (!validateuser($var['username'], $var['password'])) {
             return false;
         }

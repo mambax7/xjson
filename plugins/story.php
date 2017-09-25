@@ -57,7 +57,7 @@ function story_wsdl_service()
 function story($username, $password, $story)
 {
     global $xoopsModuleConfig;
-    if ($xoopsModuleConfig['site_user_auth'] == 1) {
+    if (1 == $xoopsModuleConfig['site_user_auth']) {
         if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
             return $ret;
         }

@@ -38,7 +38,7 @@ foreach ($funct->GetServerExtensions() as $extension) {
     $sql = 'SELECT count(*) rc FROM ' . $xoopsDB->prefix('json_plugins') . " WHERE active = 1 AND plugin_file = '" . $extension . "'";
     $ret = $xoopsDB->query($sql);
     $row = $xoopsDB->fetchArray($ret);
-    if ($row['rc'] == 1) {
+    if (1 == $row['rc']) {
         require_once XOOPS_ROOT_PATH . '/modules/xjson/plugins/' . $extension;
         $FunctionDefine[] = substr($extension, 0, strlen($extension) - 4);
     }

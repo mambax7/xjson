@@ -70,7 +70,7 @@ function xoops_create_user($username, $password, $user, $siteinfo)
 
     global $xoopsModuleConfig, $xoopsConfig;
 
-    if ($xoopsModuleConfig['site_user_auth'] == 1) {
+    if (1 == $xoopsModuleConfig['site_user_auth']) {
         if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
             return $ret;
         }
@@ -80,7 +80,7 @@ function xoops_create_user($username, $password, $user, $siteinfo)
         }
     }
 
-    if ($user['passhash'] !== '') {
+    if ('' !== $user['passhash']) {
         if ($user['passhash'] != sha1(($user['time'] - $user['rand']) . $user['uname'] . $user['pass'])) {
             return ['ERRNUM' => 4, 'ERRTXT' => 'No Passhash'];
         }
@@ -96,11 +96,11 @@ function xoops_create_user($username, $password, $user, $siteinfo)
     include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
     $xoopsAuth =& XoopsAuthFactory::getAuthConnection($uname);
 
-    if (check_auth_class($xoopsAuth) === true) {
+    if (true === check_auth_class($xoopsAuth)) {
         $result = $xoopsAuth->create_user($user_viewemail, $uname, $email, $url, $actkey, $pass, $timezone_offset, $user_mailok, $siteinfo);
         return $result;
     } else {
-        if (strlen(userCheck($uname, $email, $pass, $pass)) == 0) {
+        if (0 == strlen(userCheck($uname, $email, $pass, $pass))) {
             global $xoopsConfig;
             $configHandler   = xoops_getHandler('config');
             $xoopsConfigUser = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
@@ -110,7 +110,7 @@ function xoops_create_user($username, $password, $user, $siteinfo)
             $newuser->setVar('user_viewemail', $user_viewemail, true);
             $newuser->setVar('uname', $uname, true);
             $newuser->setVar('email', $email, true);
-            if ($url !== '') {
+            if ('' !== $url) {
                 $newuser->setVar('url', formatURL($url), true);
             }
             $newuser->setVar('user_avatar', 'blank.gif', true);
@@ -127,7 +127,7 @@ function xoops_create_user($username, $password, $user, $siteinfo)
             $newuser->setVar('umode', $xoopsConfig['com_mode'], true);
             $newuser->setVar('user_mailok', $user_mailok, true);
             $newuser->setVar('user_intrest', _US_USERREG . ' @ ' . $xoops_url, true);
-            if ($xoopsConfigUser['activation_type'] == 1) {
+            if (1 == $xoopsConfigUser['activation_type']) {
                 $newuser->setVar('level', 1, true);
             }
 
@@ -138,11 +138,11 @@ function xoops_create_user($username, $password, $user, $siteinfo)
                 if (!$memberHandler->addUserToGroup(XOOPS_GROUP_USERS, $newid)) {
                     $return = ['state' => 1, 'text' => _US_REGISTERNG];
                 }
-                if ($xoopsConfigUser['activation_type'] == 1) {
+                if (1 == $xoopsConfigUser['activation_type']) {
                     $return = ['state' => 2, 'user' => $uname];
                 }
                 // Sending notification email to user for self activation
-                if ($xoopsConfigUser['activation_type'] == 0) {
+                if (0 == $xoopsConfigUser['activation_type']) {
                     $xoopsMailer =& xoops_getMailer();
                     $xoopsMailer->useMail();
                     $xoopsMailer->setTemplate('register.tpl');
@@ -159,13 +159,13 @@ function xoops_create_user($username, $password, $user, $siteinfo)
                         $return = ['state' => 1, 'text' => _US_YOURREGISTERED];
                     }
                     // Sending notification email to administrator for activation
-                } elseif ($xoopsConfigUser['activation_type'] == 2) {
+                } elseif (2 == $xoopsConfigUser['activation_type']) {
                     $xoopsMailer =& xoops_getMailer();
                     $xoopsMailer->useMail();
                     $xoopsMailer->setTemplate('adminactivate.tpl');
                     $xoopsMailer->assign('USERNAME', $uname);
                     $xoopsMailer->assign('USEREMAIL', $email);
-                    if ($siteinfo['xoops_url'] == XOOPS_URL) {
+                    if (XOOPS_URL == $siteinfo['xoops_url']) {
                         $xoopsMailer->assign('USERACTLINK', $siteinfo['xoops_url'] . '/register.php?op=actv&id=' . $newid . '&actkey=' . $actkey);
                     }
                 } else {
@@ -185,7 +185,7 @@ function xoops_create_user($username, $password, $user, $siteinfo)
                     $return = ['state' => 1, 'text' => _US_YOURREGISTERED2];
                 }
             }
-            if ($xoopsConfigUser['new_user_notify'] == 1 && !empty($xoopsConfigUser['new_user_notify_group'])) {
+            if (1 == $xoopsConfigUser['new_user_notify'] && !empty($xoopsConfigUser['new_user_notify_group'])) {
                 $xoopsMailer =& xoops_getMailer();
                 $xoopsMailer->useMail();
                 $memberHandler = xoops_getHandler('member');

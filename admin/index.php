@@ -76,7 +76,7 @@ switch ($op) {
                 $other = 1;
             }
 
-            if ($keytype === 'PRI') {
+            if ('PRI' === $keytype) {
                 $key = 1;
             }
             $tbldat = get_fieldconfig($fieldname, $tbl_id);
@@ -105,33 +105,33 @@ switch ($op) {
                 $visible[$field]->addOption(1, '&nbsp;');
                 $crc[$field]->addOption(1, '&nbsp;');
 
-                if ($key == 1) {
+                if (1 == $key) {
                     $post[$field]->setExtra('disabled="disabled"');
-                } elseif ($tbldat['allowpost'] == 1) {
+                } elseif (1 == $tbldat['allowpost']) {
                     $post[$field]->setValue(1);
                 }
                 $ele_tray[$field]->addElement($post[$field]);
 
-                if ($tbldat['allowretrieve'] == 1) {
+                if (1 == $tbldat['allowretrieve']) {
                     $retrieve[$field]->setValue(1);
                 }
                 $ele_tray[$field]->addElement($retrieve[$field]);
 
-                if ($key == 1) {
+                if (1 == $key) {
                     $update[$field]->setExtra('disabled="disabled"');
-                } elseif ($tbldat['allowupdate'] == 1) {
+                } elseif (1 == $tbldat['allowupdate']) {
                     $update[$field]->setValue(1);
                 }
                 $ele_tray[$field]->addElement($update[$field]);
 
-                if ($tbldat['visible'] == 1) {
+                if (1 == $tbldat['visible']) {
                     $visible[$field]->setValue(1);
                 }
                 $ele_tray[$field]->addElement($visible[$field]);
 
-                if ($key == 1) {
+                if (1 == $key) {
                     $crc[$field]->setExtra('disabled="disabled"');
-                } elseif ($tbldat['crc'] == 1) {
+                } elseif (1 == $tbldat['crc']) {
                     $crc[$field]->setValue(1);
                 }
                 $ele_tray[$field]->addElement($crc[$field]);
@@ -158,21 +158,21 @@ switch ($op) {
                 $visible[$field]->addOption(1, '&nbsp;');
                 $crc[$field]->addOption(1, '&nbsp;');
 
-                if ($key == 1) {
+                if (1 == $key) {
                     $post[$field]->setExtra('disabled="disabled"');
                 }
                 $ele_tray[$field]->addElement($post[$field]);
 
                 $ele_tray[$field]->addElement($retrieve[$field]);
 
-                if ($key == 1) {
+                if (1 == $key) {
                     $update[$field]->setExtra('disabled="disabled"');
                 }
                 $ele_tray[$field]->addElement($update[$field]);
 
                 $ele_tray[$field]->addElement($visible[$field]);
 
-                if ($key == 1) {
+                if (1 == $key) {
                     $crc[$field]->setExtra('disabled="disabled"');
                 }
 
@@ -358,12 +358,12 @@ switch ($op) {
                 $retrieve[$field]->addOption(1, '&nbsp;');
                 $visible[$field]->addOption(1, '&nbsp;');
 
-                if ($tbldat['visible'] == 1) {
+                if (1 == $tbldat['visible']) {
                     $visible[$field]->setValue(1);
                 }
                 $ele_tray[$field]->addElement($visible[$field]);
 
-                if ($tbldat['allowretrieve'] == 1) {
+                if (1 == $tbldat['allowretrieve']) {
                     $retrieve[$field]->setValue(1);
                 }
                 $ele_tray[$field]->addElement($retrieve[$field]);
@@ -414,7 +414,7 @@ switch ($op) {
 ');
             $result = ob_get_contents();
             ob_end_clean();
-            if (strpos(' ' . $result, 'Parse') == 0) {
+            if (0 == strpos(' ' . $result, 'Parse')) {
                 $FunctionDefine[] = $extension;
             }
         }
@@ -449,7 +449,7 @@ switch ($op) {
 
                 $active[$field]->addOption(1, '&nbsp;');
 
-                if ($functdata['active'] == 1) {
+                if (1 == $functdata['active']) {
                     $active[$field]->setValue(1);
                 }
                 $ele_tray[$field]->addElement($active[$field]);

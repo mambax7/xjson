@@ -45,7 +45,7 @@ function retrieve($var)
 {
     global $xoopsModuleConfig;
 
-    if ($xoopsModuleConfig['site_user_auth'] == 1) {
+    if (1 == $xoopsModuleConfig['site_user_auth']) {
         if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
             return $ret;
         }
@@ -69,7 +69,7 @@ function retrieve($var)
     } else {
         $sql = 'SELECT ';
         foreach ($var['data'] as $data) {
-            if ($data['field'] === '*') {
+            if ('*' === $data['field']) {
                 return ['ErrNum' => 7, 'ErrDesc' => 'Wildcard not accepted'];
             }
 
@@ -83,7 +83,7 @@ function retrieve($var)
         }
 
         global $xoopsModuleConfig;
-        if ($xoopsModuleConfig['site_user_auth'] == 1) {
+        if (1 == $xoopsModuleConfig['site_user_auth']) {
             if (!validateuser($var['username'], $var['password'])) {
                 return false;
             }

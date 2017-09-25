@@ -52,7 +52,7 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
     {
         global $xoopsModuleConfig, $xoopsConfig;
 
-        if ($xoopsModuleConfig['site_user_auth'] == 1) {
+        if (1 == $xoopsModuleConfig['site_user_auth']) {
             if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
                 return $ret;
             }
@@ -62,7 +62,7 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
             }
         }
 
-        if ($validate['passhash'] !== '') {
+        if ('' !== $validate['passhash']) {
             if ($validate['passhash'] != sha1(($validate['time'] - $validate['rand']) . $validate['uname'] . $validate['pass'])) {
                 return ['ERRNUM' => 4, 'ERRTXT' => 'No Passhash'];
             }
@@ -74,7 +74,7 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
         include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
         $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($validate['uname']));
 
-        if (check_auth_class($xoopsAuth) === true) {
+        if (true === check_auth_class($xoopsAuth)) {
             $result = $xoopsAuth->validate($validate['uname'], $validate['email'], $validate['pass'], $validate['vpass']);
             return $result;
         } else {
@@ -93,7 +93,7 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
     {
         global $xoopsModuleConfig, $xoopsConfig;
 
-        if ($xoopsModuleConfig['site_user_auth'] == 1) {
+        if (1 == $xoopsModuleConfig['site_user_auth']) {
             if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
                 return $ret;
             }
@@ -103,7 +103,7 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
             }
         }
 
-        if ($validate['passhash'] !== '') {
+        if ('' !== $validate['passhash']) {
             if ($validate['passhash'] != sha1(($validate['time'] - $validate['rand']) . $validate['uname'] . $validate['pass'])) {
                 return ['ERRNUM' => 4, 'ERRTXT' => 'No Passhash'];
             }

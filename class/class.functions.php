@@ -47,7 +47,7 @@ class FunctionsHandler
     {
         $ignored = [];
         $list    = [];
-        if (substr($dirname, -1) !== '/') {
+        if ('/' !== substr($dirname, -1)) {
             $dirname .= '/';
         }
         if ($handle = opendir($dirname)) {
@@ -78,7 +78,7 @@ class FunctionsHandler
     public function getFileListAsArray($dirname, $prefix = '')
     {
         $filelist = [];
-        if (substr($dirname, -1) === '/') {
+        if ('/' === substr($dirname, -1)) {
             $dirname = substr($dirname, 0, -1);
         }
         if (is_dir($dirname) && $handle = opendir($dirname)) {

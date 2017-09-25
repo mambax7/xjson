@@ -37,7 +37,7 @@ function tablesforretrieve_wsdl_service()
 function tablesforretrieve($var)
 {
     global $xoopsModuleConfig;
-    if ($xoopsModuleConfig['site_user_auth'] == 1) {
+    if (1 == $xoopsModuleConfig['site_user_auth']) {
         if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
             return $ret;
         }
@@ -59,7 +59,7 @@ function tablesforretrieve($var)
     }
 
     global $xoopsModuleConfig;
-    if ($xoopsModuleConfig['site_user_auth'] == 1) {
+    if (1 == $xoopsModuleConfig['site_user_auth']) {
         if (!validateuser($var['username'], $var['password'])) {
             return false;
         }

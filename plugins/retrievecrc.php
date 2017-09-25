@@ -44,7 +44,7 @@ function retrievecrc($var)
 {
     global $xoopsModuleConfig;
 
-    if ($xoopsModuleConfig['site_user_auth'] == 1) {
+    if (1 == $xoopsModuleConfig['site_user_auth']) {
         if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
             return $ret;
         }
@@ -82,7 +82,7 @@ function retrievecrc($var)
     } elseif ($var['id'] > 0) {
         $sql .= ' FROM ' . $xoopsDB->prefix(get_tablename($var['id']));
     }
-    if ($var['clause'] == 1) {
+    if (1 == $var['clause']) {
         if (strpos(' ' . strtolower($var['clause']), 'union') > 0) {
             return ['ErrNum' => 8, 'ErrDesc' => 'Union not accepted'];
         }
@@ -108,7 +108,7 @@ function retrievecrc($var)
     }
 
     global $xoopsModuleConfig;
-    if ($xoopsModuleConfig['site_user_auth'] == 1) {
+    if (1 == $xoopsModuleConfig['site_user_auth']) {
         if (!validateuser($var['username'], $var['password'])) {
             return false;
         }

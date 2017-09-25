@@ -40,7 +40,7 @@ function update_wsdl_service()
 function update($var)
 {
     global $xoopsModuleConfig;
-    if ($xoopsModuleConfig['site_user_auth'] == 1) {
+    if (1 == $xoopsModuleConfig['site_user_auth']) {
         if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
             return $ret;
         }
@@ -75,12 +75,12 @@ function update($var)
                 $sql_c .= ' WHERE `' . $data['field'] . "` = '" . addslashes($data['value']) . "'";
             }
         }
-        if (strlen($sql_c) == 0) {
+        if (0 == strlen($sql_c)) {
             return ['ErrNum' => 6, 'ErrDesc' => 'No primary key set'];
         }
 
         global $xoopsModuleConfig;
-        if ($xoopsModuleConfig['site_user_auth'] == 1) {
+        if (1 == $xoopsModuleConfig['site_user_auth']) {
             if (!validateuser($var['username'], $var['password'])) {
                 return false;
             }
