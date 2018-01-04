@@ -8,7 +8,7 @@ function obj2array($objects)
     $ret = [];
     foreach ($objects as $key => $value) {
         if (is_a($value, 'stdClass')) {
-            $ret[$key] = (array)obj2array($value);
+            $ret[$key] = obj2array($value);
         } elseif (is_array($value)) {
             $ret[$key] = obj2array($value);
         } else {

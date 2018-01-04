@@ -60,7 +60,7 @@ switch ($op) {
         }
         echo '</div>';
 
-        echo "<br />\n";
+        echo "<br>\n";
 }
 footer_adminMenu();
 xoops_cp_footer();

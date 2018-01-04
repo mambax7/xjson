@@ -24,6 +24,8 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------- //
 
+require_once __DIR__ . '/preloads/autoloader.php';
+
 $modversion['version']       = 1.54;
 $modversion['module_status'] = 'Beta 1';
 $modversion['release_date']  = '2017/08/07';

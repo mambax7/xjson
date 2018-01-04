@@ -40,19 +40,19 @@ if (!defined('usercheck_inc')) {
             $configHandler   = xoops_getHandler('config');
             $xoopsConfigUser = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
             $xoopsDB         = XoopsDatabaseFactory::getDatabaseConnection();
-            $myts            = MyTextSanitizer::getInstance();
+            $myts            = \MyTextSanitizer::getInstance();
             $stop            = '';
             if (!checkEmail($email)) {
-                $stop .= _US_INVALIDMAIL . '<br />';
+                $stop .= _US_INVALIDMAIL . '<br>';
             }
             foreach ($xoopsConfigUser['bad_emails'] as $be) {
                 if (!empty($be) && preg_match('/' . $be . '/i', $email)) {
-                    $stop .= _US_INVALIDMAIL . '<br />';
+                    $stop .= _US_INVALIDMAIL . '<br>';
                     break;
                 }
             }
             if (strrpos($email, ' ') > 0) {
-                $stop .= _US_EMAILNOSPACES . '<br />';
+                $stop .= _US_EMAILNOSPACES . '<br>';
             }
             $uname = xoops_trim($uname);
             switch ($xoopsConfigUser['uname_test_level']) {
@@ -70,28 +70,28 @@ if (!defined('usercheck_inc')) {
                     break;
             }
             if (empty($uname) || preg_match($restriction, $uname)) {
-                $stop .= _US_INVALIDNICKNAME . '<br />';
+                $stop .= _US_INVALIDNICKNAME . '<br>';
             }
             if (strlen($uname) > $xoopsConfigUser['maxuname']) {
-                $stop .= sprintf(_US_NICKNAMETOOLONG, $xoopsConfigUser['maxuname']) . '<br />';
+                $stop .= sprintf(_US_NICKNAMETOOLONG, $xoopsConfigUser['maxuname']) . '<br>';
             }
             if (strlen($uname) < $xoopsConfigUser['minuname']) {
-                $stop .= sprintf(_US_NICKNAMETOOSHORT, $xoopsConfigUser['minuname']) . '<br />';
+                $stop .= sprintf(_US_NICKNAMETOOSHORT, $xoopsConfigUser['minuname']) . '<br>';
             }
             foreach ($xoopsConfigUser['bad_unames'] as $bu) {
                 if (!empty($bu) && preg_match('/' . $bu . '/i', $uname)) {
-                    $stop .= _US_NAMERESERVED . '<br />';
+                    $stop .= _US_NAMERESERVED . '<br>';
                     break;
                 }
             }
             if (strrpos($uname, ' ') > 0) {
-                $stop .= _US_NICKNAMENOSPACES . '<br />';
+                $stop .= _US_NICKNAMENOSPACES . '<br>';
             }
             $sql    = sprintf('SELECT COUNT(*) FROM %s WHERE uname = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($uname)));
             $result = $xoopsDB->query($sql);
             list($count) = $xoopsDB->fetchRow($result);
             if ($count > 0) {
-                $stop .= _US_NICKNAMETAKEN . '<br />';
+                $stop .= _US_NICKNAMETAKEN . '<br>';
             }
             $count = 0;
             if ($email) {
@@ -99,16 +99,16 @@ if (!defined('usercheck_inc')) {
                 $result = $xoopsDB->query($sql);
                 list($count) = $xoopsDB->fetchRow($result);
                 if ($count > 0) {
-                    $stop .= _US_EMAILTAKEN . '<br />';
+                    $stop .= _US_EMAILTAKEN . '<br>';
                 }
             }
             if (!isset($pass) || '' === $pass || !isset($vpass) || '' === $vpass) {
-                $stop .= _US_ENTERPWD . '<br />';
+                $stop .= _US_ENTERPWD . '<br>';
             }
             if (isset($pass) && ($pass != $vpass)) {
-                $stop .= _US_PASSNOTSAME . '<br />';
+                $stop .= _US_PASSNOTSAME . '<br>';
             } elseif (('' !== $pass) && (strlen($pass) < $xoopsConfigUser['minpass'])) {
-                $stop .= sprintf(_US_PWDTOOSHORT, $xoopsConfigUser['minpass']) . '<br />';
+                $stop .= sprintf(_US_PWDTOOSHORT, $xoopsConfigUser['minpass']) . '<br>';
             }
             return $stop;
         }

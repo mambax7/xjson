@@ -108,7 +108,7 @@ function xoops_check_activation($username, $password, $user)
                     $configHandler   = xoops_getHandler('config');
                     $xoopsConfigUser = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
                     if (2 == $xoopsConfigUser['activation_type']) {
-                        $myts        = MyTextSanitizer::getInstance();
+                        $myts        = \MyTextSanitizer::getInstance();
                         $xoopsMailer =& xoops_getMailer();
                         $xoopsMailer->useMail();
                         $xoopsMailer->setTemplate('activated.tpl');

@@ -72,7 +72,7 @@ function story($username, $password, $story)
     define('NW_MODULE_PATH', $GLOBALS['xoops']->path('/modules/xnews/'));
     require_once $GLOBALS['xoops']->path('/modules/xnews/class/class.newsstory.php');
 
-    $newstory = new nw_NewsStory(0);
+    $newstory = new XNewsStory(0);
 
     $newstory->setUid($story['uid']);
 
