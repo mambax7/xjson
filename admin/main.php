@@ -29,6 +29,7 @@ switch ($op) {
             $tbl_id = 1;
         }
 
+        $row = [];
         $sql = 'SELECT * FROM ' . $xoopsDB->prefix('json_tables') . " WHERE view = '0'";
         $ret = $xoopsDB->queryF($sql);
 
@@ -57,7 +58,7 @@ switch ($op) {
 
         $ele_tray = [];
 
-        while (list($fieldname, $type, $null, $keytype, $tmp, $tmp) = $xoopsDB->fetchRow($ret)) {
+        while (false !== (list($fieldname, $type, $null, $keytype, $tmp, $tmp) = $xoopsDB->fetchRow($ret))) {
             $field++;
 
             $int    = 0;
@@ -335,7 +336,7 @@ switch ($op) {
         $form_view->setExtra("enctype='multipart/form-data'");
 
         $field = $new = 0;
-        while (list($table) = $xoopsDB->fetchRow($ret)) {
+        while (false !== (list($table) = $xoopsDB->fetchRow($ret))) {
             $field++;
             $tbldat = get_tableconfig($table);
             if (!isset($tbldat)) {
@@ -480,7 +481,7 @@ switch ($op) {
         $form_tables->setExtra("enctype='multipart/form-data'");
 
         $field = $new = 0;
-        while (list($table) = $xoopsDB->fetchRow($ret)) {
+        while (false !== (list($table) = $xoopsDB->fetchRow($ret))) {
             $field++;
             $tbldat = get_tableconfig($table);
 
