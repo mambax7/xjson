@@ -69,7 +69,7 @@ function retrievecrc($var)
     $ret = $xoopsDB->query($sql);
     $sql = 'SELECT ';
     $tmp = [];
-    while ($row = $xoopsDB->fetchArray($ret)) {
+    while (false !== ($row = $xoopsDB->fetchArray($ret))) {
         $sql   .= '`' . $row['fieldname'] . '`';
         $tmp[] = $row['fieldname'];
         $t++;
@@ -92,7 +92,7 @@ function retrievecrc($var)
     $ret = $xoopsDB->query($sql);
     $rtn = [];
 
-    while ($row = $xoopsDB->fetchArray($ret)) {
+    while (false !== ($row = $xoopsDB->fetchArray($ret))) {
         $id++;
         $tmp_b = [];
         $crc   = '';
@@ -115,3 +115,4 @@ function retrievecrc($var)
     }
     return $rtn;
 }
+?>

@@ -114,3 +114,4 @@ function xoops_authentication($username, $password, $auth)
         return ['ERRNUM' => 3, 'ERRTXT' => _ERR_FUNCTION_FAIL];
     }
 }
+?>

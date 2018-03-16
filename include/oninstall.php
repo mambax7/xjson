@@ -17,6 +17,9 @@
  * @author       XOOPS Development Team
  */
 
+use XoopsModules\Xjson;
+use XoopsModules\Xjson\Common;
+
 //require_once __DIR__ . '/setup.php';
 
 /**
@@ -26,12 +29,11 @@
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_install_xjson(XoopsModule $module)
+function xoops_module_pre_install_xjson(\XoopsModule $module)
 {
-
     include __DIR__ . '/../preloads/autoloader.php';
-    /** @var \Utility $utility */
-    $utility = new \XoopsModules\Xjson\Utility();
+    /** @var Xjson\Utility $utility */
+    $utility = new Xjson\Utility();
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
 
@@ -52,7 +54,7 @@ function xoops_module_pre_install_xjson(XoopsModule $module)
  *
  * @return bool true if installation successful, false if not
  */
-function xoops_module_install_xjson(XoopsModule $module)
+function xoops_module_install_xjson(\XoopsModule $module)
 {
     require_once  __DIR__ . '/../../../mainfile.php';
     require_once  __DIR__ . '/../include/config.php';
@@ -61,7 +63,7 @@ function xoops_module_install_xjson(XoopsModule $module)
 
     $helper       = Xjson\Helper::getInstance();
     $utility      = new Xjson\Utility();
-    $configurator = new Xjson\Configurator();
+    $configurator = new Xjson\Common\Configurator();
     // Load language files
     $helper->loadLanguage('admin');
     $helper->loadLanguage('modinfo');
@@ -87,10 +89,10 @@ function xoops_module_install_xjson(XoopsModule $module)
     }
 
     //  ---  COPY blank.png FILES ---------------
-    if (count($configurator->blankFiles) > 0) {
+    if (count($configurator->copyBlankFiles) > 0) {
         $file = __DIR__ . '/../assets/images/blank.png';
-        foreach (array_keys($configurator->blankFiles) as $i) {
-            $dest = $configurator->blankFiles[$i] . '/blank.png';
+        foreach (array_keys($configurator->copyBlankFiles) as $i) {
+            $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
             $utilityClass::copyFile($file, $dest);
         }
     }
@@ -100,24 +102,3 @@ function xoops_module_install_xjson(XoopsModule $module)
 
     return true;
 }
-
-//======================================================
-
-$indexFile = 'index.html';
-$blankFile = $GLOBALS['xoops']->path('modules/randomquote/assets/images/icons/blank.gif');
-
-//Creation du dossier "uploads" pour le module à la racine du site
-$module_uploads = $GLOBALS['xoops']->path('uploads/randomquote');
-if (!is_dir($module_uploads)) {
-    mkdir($module_uploads, 0777);
-}
-chmod($module_uploads, 0777);
-copy($indexFile, $GLOBALS['xoops']->path('uploads/randomquote/index.html'));
-
-//Creation du fichier citas dans uploads
-$module_uploads = $GLOBALS['xoops']->path('uploads/randomquote/citas');
-if (!is_dir($module_uploads)) {
-    mkdir($module_uploads, 0777);
-}
-chmod($module_uploads, 0777);
-copy($indexFile, $GLOBALS['xoops']->path('uploads/randomquote/citas/index.html'));

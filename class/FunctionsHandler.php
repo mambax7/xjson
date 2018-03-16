@@ -1,4 +1,4 @@
-<?php
+<?php namespace XoopsModules\Xjson;
 
 /**
  * Class FunctionsHandler
@@ -18,7 +18,7 @@ class FunctionsHandler
     /**
      * @return array
      */
-    public function GetServerExtensions()
+    public function getServerExtensions()
     {
         $files = [];
         $f     = [];

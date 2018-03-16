@@ -17,7 +17,10 @@
  * @author       XOOPS Development Team
  */
 
-if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof XoopsUser)
+use XoopsModules\Xjson;
+use XoopsModules\Xjson\Common;
+
+if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
     || !$GLOBALS['xoopsUser']->IsAdmin()
 ) {
     exit('Restricted access' . PHP_EOL);
@@ -42,12 +45,9 @@ function tableExists($tablename)
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_update_xjson(XoopsModule $module)
+function xoops_module_pre_update_xjson(\XoopsModule $module)
 {
-    $moduleDirName = basename(dirname(__DIR__));
-    /** @var Xjson\Helper $helper */
     /** @var Xjson\Utility $utility */
-    $helper       = Xjson\Helper::getInstance();
     $utility      = new Xjson\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
@@ -64,32 +64,19 @@ function xoops_module_pre_update_xjson(XoopsModule $module)
  * @return bool true if update successful, false if not
  */
 
-function xoops_module_update_xjson(XoopsModule $module, $previousVersion = null)
+function xoops_module_update_xjson(\XoopsModule $module, $previousVersion = null)
 {
     $moduleDirName = basename(dirname(__DIR__));
     $capsDirName   = strtoupper($moduleDirName);
 
     /** @var Xjson\Helper $helper */
     /** @var Xjson\Utility $utility */
-    /** @var Xjson\Configurator $configurator */
+    /** @var Xjson\Common\Configurator $configurator */
     $helper  = Xjson\Helper::getInstance();
     $utility = new Xjson\Utility();
-    $configurator = new Xjson\Configurator();
+    $configurator = new Xjson\Common\Configurator();
 
     if ($previousVersion < 240) {
-
-        //rename column EXAMPLE
-        $tables     = new Tables();
-        $table      = 'xjsonx_categories';
-        $column     = 'ordre';
-        $newName    = 'order';
-        $attributes = "INT(5) NOT NULL DEFAULT '0'";
-        if ($tables->useTable($table)) {
-            $tables->alterColumn($table, $column, $attributes, $newName);
-            if (!$tables->executeQueue()) {
-                echo '<br>' . _AM_XXXXX_UPGRADEFAILED0 . ' ' . $migrate->getLastError();
-            }
-        }
 
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {
@@ -98,7 +85,7 @@ function xoops_module_update_xjson(XoopsModule $module, $previousVersion = null)
                 if (is_dir($templateFolder)) {
                     $templateList = array_diff(scandir($templateFolder, SCANDIR_SORT_NONE), ['..', '.']);
                     foreach ($templateList as $k => $v) {
-                        $fileInfo = new SplFileInfo($templateFolder . $v);
+                        $fileInfo = new \SplFileInfo($templateFolder . $v);
                         if ('html' === $fileInfo->getExtension() && 'index.html' !== $fileInfo->getFilename()) {
                             if (file_exists($templateFolder . $v)) {
                                 unlink($templateFolder . $v);
@@ -141,10 +128,10 @@ function xoops_module_update_xjson(XoopsModule $module, $previousVersion = null)
         }
 
         //  ---  COPY blank.png FILES ---------------
-        if (count($configurator->blankFiles) > 0) {
+        if (count($configurator->copyBlankFiles) > 0) {
             $file = __DIR__ . '/../assets/images/blank.png';
-            foreach (array_keys($configurator->blankFiles) as $i) {
-                $dest = $configurator->blankFiles[$i] . '/blank.png';
+            foreach (array_keys($configurator->copyBlankFiles) as $i) {
+                $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
                 $utilityClass::copyFile($file, $dest);
             }
         }
@@ -156,8 +143,6 @@ function xoops_module_update_xjson(XoopsModule $module, $previousVersion = null)
         /** @var XoopsGroupPermHandler $gpermHandler */
         $gpermHandler = xoops_getHandler('groupperm');
         return $gpermHandler->deleteByModule($module->getVar('mid'), 'item_read');
-
     }
     return true;
 }
-

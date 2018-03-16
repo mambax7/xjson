@@ -63,3 +63,4 @@ function xoops_network_disclaimer($username, $password)
         return ['ERRNUM' => 1, 'RESULT' => $xoopsConfigUser['reg_disclaimer']];
     }
 }
+?>

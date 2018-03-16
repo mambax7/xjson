@@ -39,7 +39,7 @@ function viewretrieve_wsdl_service()
 // Define the method as a PHP function
 /**
  * @param $var
- * @return array
+ * @return array|bool
  */
 function viewretrieve($var)
 {
@@ -90,7 +90,7 @@ function viewretrieve($var)
             return ['ErrNum' => 3, 'ErrDesc' => 'No Records Returned from Query'];
         } else {
             $rtn = [];
-            while ($row = $xoopsDB->fetchArray($rt)) {
+            while (false !== ($row = $xoopsDB->fetchArray($rt))) {
                 $rdata = [];
                 foreach ($var['data'] as $data) {
                     $rdata[] = ['fieldname' => $data['field'], 'value' => $row[$data['field']]];
@@ -102,3 +102,4 @@ function viewretrieve($var)
         return ['total_records' => $xoopsDB->getRowsNum($rt), 'data' => $rtn];
     }
 }
+?>

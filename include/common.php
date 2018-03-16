@@ -4,6 +4,85 @@
  * @param $password
  * @return bool
  */
+
+use XoopsModules\Xjson;
+
+include __DIR__ . '/../preloads/autoloader.php';
+
+$moduleDirName = basename(dirname(__DIR__));
+$moduleDirNameUpper   = strtoupper($moduleDirName); //$capsDirName
+
+
+/** @var \XoopsDatabase $db */
+/** @var Xjson\Helper $helper */
+/** @var Xjson\Utility $utility */
+$db      = \XoopsDatabaseFactory::getDatabaseConnection();
+$helper  = Xjson\Helper::getInstance();
+$utility = new Xjson\Utility();
+//$configurator = new Xjson\Common\Configurator();
+
+$helper->loadLanguage('common');
+
+//handlers
+//$categoryHandler     = new Xjson\CategoryHandler($db);
+//$downloadHandler     = new Xjson\DownloadHandler($db);
+
+if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
+    define($moduleDirNameUpper . '_DIRNAME', basename(dirname(__DIR__)));
+    define($moduleDirNameUpper . '_ROOT_PATH', XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/');
+    define($moduleDirNameUpper . '_PATH', XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/');
+    define($moduleDirNameUpper . '_URL', XOOPS_URL . '/modules/' . $moduleDirName . '/');
+    define($moduleDirNameUpper . '_IMAGE_URL', constant($moduleDirNameUpper . '_URL') . '/assets/images/');
+    define($moduleDirNameUpper . '_IMAGE_PATH', constant($moduleDirNameUpper . '_ROOT_PATH') . '/assets/images');
+    define($moduleDirNameUpper . '_ADMIN_URL', constant($moduleDirNameUpper . '_URL') . '/admin/');
+    define($moduleDirNameUpper . '_ADMIN_PATH', constant($moduleDirNameUpper . '_ROOT_PATH') . '/admin/');
+    define($moduleDirNameUpper . '_ADMIN', constant($moduleDirNameUpper . '_URL') . '/admin/index.php');
+    define($moduleDirNameUpper . '_AUTHOR_LOGOIMG', constant($moduleDirNameUpper . '_URL') . '/assets/images/logoModule.png');
+    define($moduleDirNameUpper . '_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . $moduleDirName); // WITHOUT Trailing slash
+    define($moduleDirNameUpper . '_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . $moduleDirName); // WITHOUT Trailing slash
+    define($moduleDirNameUpper . '_CONSTANTS_DEFINED', 1);
+}
+
+$pathIcon16    = Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32    = Xmf\Module\Admin::iconUrl('', 32);
+//$pathModIcon16 = $helper->getModule()->getInfo('modicons16');
+//$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+
+$icons = [
+    'edit'    => "<img src='" . $pathIcon16 . "/edit.png'  alt=" . _EDIT . "' align='middle'>",
+    'delete'  => "<img src='" . $pathIcon16 . "/delete.png' alt='" . _DELETE . "' align='middle'>",
+    'clone'   => "<img src='" . $pathIcon16 . "/editcopy.png' alt='" . _CLONE . "' align='middle'>",
+    'preview' => "<img src='" . $pathIcon16 . "/view.png' alt='" . _PREVIEW . "' align='middle'>",
+    'print'   => "<img src='" . $pathIcon16 . "/printer.png' alt='" . _CLONE . "' align='middle'>",
+    'pdf'     => "<img src='" . $pathIcon16 . "/pdf.png' alt='" . _CLONE . "' align='middle'>",
+    'add'     => "<img src='" . $pathIcon16 . "/add.png' alt='" . _ADD . "' align='middle'>",
+    '0'       => "<img src='" . $pathIcon16 . "/0.png' alt='" . 0 . "' align='middle'>",
+    '1'       => "<img src='" . $pathIcon16 . "/1.png' alt='" . 1 . "' align='middle'>",
+];
+
+$debug = false;
+
+// MyTextSanitizer object
+$myts = \MyTextSanitizer::getInstance();
+
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof \XoopsTpl)) {
+    require_once $GLOBALS['xoops']->path('class/template.php');
+    $GLOBALS['xoopsTpl'] = new \XoopsTpl();
+}
+
+$GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
+// Local icons path
+if (is_object($helper->getModule())) {
+    $pathModIcon16 = $helper->getModule()->getInfo('modicons16');
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+
+    $GLOBALS['xoopsTpl']->assign('pathModIcon16', XOOPS_URL . '/modules/' . $moduleDirName . '/' . $pathModIcon16);
+    $GLOBALS['xoopsTpl']->assign('pathModIcon32', $pathModIcon32);
+
+}
+
+    //============================================================
+
 function validateuser($username, $password)
 {
     global $xoopsDB;
@@ -69,12 +148,13 @@ function validate($tbl_id, $data, $function)
  */
 function checkright($function_file, $username, $password)
 {
+    global $xoopsConfig;
     $uid           = user_uid($username, $password);
     $moduleHandler = xoops_getHandler('module');
     $xoModule      = $moduleHandler->getByDirname('xjson');
     if (0 <> $uid) {
         global $xoopsDB, $xoopsModule;
-        $rUser         = new XoopsUser($uid);
+        $rUser         = new \XoopsUser($uid);
         $gpermHandler  = xoops_getHandler('groupperm');
         $groups        = is_object($rUser) ? $rUser->getGroups() : [XOOPS_GROUP_ANONYMOUS];
         $sql           = 'SELECT plugin_id FROM ' . $xoopsDB->prefix('json_plugins') . " WHERE plugin_file = '" . addslashes($function_file) . "'";
@@ -250,10 +330,10 @@ if (!function_exists('xoops_getUserIP')) {
  */
 function check_for_lock($function_file, $username, $password)
 {
-    xoops_load('cache');
+    xoops_load('xoopscache');
     $userip = xoops_getUserIP();
     $retn   = false;
-    if ($result = XoopsCache::read('lock_' . $function_file . '_' . $username)) {
+    if ($result = \XoopsCache::read('lock_' . $function_file . '_' . $username)) {
         foreach ($result as $id => $ret) {
             if ($ret['made'] < time() - $GLOBALS['xoopsModuleConfig']['lock_seconds']
                 || $ret['made'] < ((time() - $GLOBALS['xoopsModuleConfig']['lock_seconds']) + mt_rand(1, $GLOBALS['xoopsModuleConfig']['lock_random_seed']))) {
@@ -262,8 +342,8 @@ function check_for_lock($function_file, $username, $password)
                 $retn = ['ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in'];
             }
         }
-        XoopsCache::delete('lock_' . $function_file . '_' . $username);
-        XoopsCache::write('lock_' . $function_file . '_' . $username, $result, $GLOBALS['cache_seconds']);
+        \XoopsCache::delete('lock_' . $function_file . '_' . $username);
+        \XoopsCache::write('lock_' . $function_file . '_' . $username, $result, $GLOBALS['cache_seconds']);
         return $retn;
     }
 }

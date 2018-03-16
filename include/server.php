@@ -1,4 +1,6 @@
 <?php
+
+use XoopsModules\Xjson;
 /**
  * @param $objects
  * @return array
@@ -23,17 +25,17 @@ $ttlresult = [];
 
 xoops_load('xoopscache');
 
-require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/class.functions.php';
+//require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/class.functions.php';
 require_once __DIR__ . '/common.php';
 if (!function_exists('json_encode')) {
     require_once __DIR__ . '/JSON.php';
     $json = new Services_JSON();
 }
 
-$funct = new FunctionsHandler();
+$funct = new Xjson\FunctionsHandler();
 
 $FunctionDefine = [];
-foreach ($funct->GetServerExtensions() as $extension) {
+foreach ($funct->getServerExtensions() as $extension) {
     global $xoopsDB;
     $sql = 'SELECT count(*) rc FROM ' . $xoopsDB->prefix('json_plugins') . " WHERE active = 1 AND plugin_file = '" . $extension . "'";
     $ret = $xoopsDB->query($sql);

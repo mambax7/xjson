@@ -114,3 +114,4 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
         return ['ERRNUM' => 1, 'RESULT' => userCheck($validate['uname'], $validate['email'], $validate['pass'], $validate['vpass'])];
     }
 }
+?>

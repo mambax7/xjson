@@ -4,11 +4,14 @@ define('_XJSON_WDSLDESC', 'Turn on and off WDSL Services');
 define('_XJSON_USERAUTH', 'Requires Username');
 define('_XJSON_USERAUTHDESC', 'Only Allows Site Users to use services');
 
+define('_XJSON_ADMINMENU_0', 'Home');
 define('_XJSON_ADMINMENU_1', 'Configure Tables');
 define('_XJSON_ADMINMENU_2', 'Configure Fields');
 define('_XJSON_ADMINMENU_3', 'Configure Views');
 define('_XJSON_ADMINMENU_4', 'Configure Plugins');
 define('_XJSON_ADMINMENU_5', 'Permissions');
+define('_XJSON_ADMINMENU_ABOUT', 'About');
+
 
 define('_XJSON_PERMISSIONSVIEWMAN', 'Function Call Permissions');
 define('_XJSON_VIEW_FUNCTION', 'Functions');
@@ -30,8 +33,8 @@ define('_XJSON_SECONDS_DESC', 'Period of time for locked function to be invocate
 define('_XJSON_SECONDSCACHE', 'Lockout cache stored for');
 define('_XJSON_SECONDSCACHE_DESC', 'Period of time for cache function to be invocated!');
 
-define('_XJSON_FUNCTIONSCACHE', 'Function calls are cached for');
-define('_XJSON_FUNCTIONSCACHE_DESC', 'Period of time for cache function to be invocated!');
+define('_XJSON_FUNCTIONCACHE', 'Function calls are cached for');
+define('_XJSON_FUNCTIONCACHE_DESC', 'Period of time for cache function to be invocated!');
 
 define('_XJSON_SECONDS_3600', '1 Hour');
 define('_XJSON_SECONDS_1800', '30 minutes');
@@ -44,3 +47,4 @@ define('_XJSON_SECONDS_30', '30 Seconds');
 
 define('_XJSON_USERANDOMLOCK', 'Random seconds seed (maximum value)');
 define('_XJSON_USERANDOMLOCK_DESC', 'You should not set this above the maximum function lockout time!');
+

@@ -39,7 +39,7 @@ if (!defined('usercheck_inc')) {
         {
             $configHandler   = xoops_getHandler('config');
             $xoopsConfigUser = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
-            $xoopsDB         = XoopsDatabaseFactory::getDatabaseConnection();
+            $xoopsDB         = \XoopsDatabaseFactory::getDatabaseConnection();
             $myts            = \MyTextSanitizer::getInstance();
             $stop            = '';
             if (!checkEmail($email)) {
@@ -87,7 +87,7 @@ if (!defined('usercheck_inc')) {
             if (strrpos($uname, ' ') > 0) {
                 $stop .= _US_NICKNAMENOSPACES . '<br>';
             }
-            $sql    = sprintf('SELECT COUNT(*) FROM %s WHERE uname = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($uname)));
+            $sql    = sprintf('SELECT COUNT(*) FROM `%s` WHERE uname = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($uname)));
             $result = $xoopsDB->query($sql);
             list($count) = $xoopsDB->fetchRow($result);
             if ($count > 0) {
@@ -95,7 +95,7 @@ if (!defined('usercheck_inc')) {
             }
             $count = 0;
             if ($email) {
-                $sql    = sprintf('SELECT COUNT(*) FROM %s WHERE email = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($email)));
+                $sql    = sprintf('SELECT COUNT(*) FROM `%s` WHERE email = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($email)));
                 $result = $xoopsDB->query($sql);
                 list($count) = $xoopsDB->fetchRow($result);
                 if ($count > 0) {

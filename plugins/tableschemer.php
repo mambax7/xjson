@@ -77,7 +77,7 @@ function tableschemer($var)
 
     $ret = $xoopsDB->query($sql);
     $rtn = [];
-    while ($row = $xoopsDB->fetchArray($ret)) {
+    while (false !== ($row = $xoopsDB->fetchArray($ret))) {
         $rtn[] = [
             'table_id'      => $row['tbl_id'],
             'field'         => $row['fieldname'],
@@ -101,3 +101,4 @@ function tableschemer($var)
     }
     return $rtn;
 }
+?>

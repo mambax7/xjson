@@ -149,7 +149,7 @@ function xoops_create_user($username, $password, $user, $siteinfo)
                     $xoopsMailer->assign('SITENAME', $siteinfo['sitename']);
                     $xoopsMailer->assign('ADMINMAIL', $siteinfo['adminmail']);
                     $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
-                    $xoopsMailer->setToUsers(new XoopsUser($newid));
+                    $xoopsMailer->setToUsers(new \XoopsUser($newid));
                     $xoopsMailer->setFromEmail($siteinfo['adminmail']);
                     $xoopsMailer->setFromName($siteinfo['sitename']);
                     $xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
@@ -197,7 +197,7 @@ function xoops_create_user($username, $password, $user, $siteinfo)
                 $xoopsMailer->send();
             }
 
-            if (strpos(strtolower($_SERVER['HTTP_HOST']), 'xortify.com')) {
+            if (stripos($_SERVER['HTTP_HOST'], 'xortify.com')) {
                 define('XORTIFY_API_URI', 'http://xortify.chronolabs.coop/soap/');
             } else {
                 define('XORTIFY_API_URI', 'http://xortify.com/soap/');
@@ -235,3 +235,4 @@ function xoops_create_user($username, $password, $user, $siteinfo)
         }
     }
 }
+?>

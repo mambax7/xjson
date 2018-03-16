@@ -49,7 +49,7 @@ function tablesforupdate($var)
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('json_tables') . ' WHERE allowupdate = 1 AND visible = 1';
     $ret = $xoopsDB->query($sql);
     $rtn = [];
-    while ($row = $xoopsDB->fetchArray($ret)) {
+    while (false !== ($row = $xoopsDB->fetchArray($ret))) {
         $t++;
         $rtn[$t] = [
             'id'    => $row['tbl_id'],
@@ -65,3 +65,4 @@ function tablesforupdate($var)
     }
     return $rtn;
 }
+?>

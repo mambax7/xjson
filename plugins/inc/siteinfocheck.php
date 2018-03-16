@@ -1,7 +1,7 @@
 <?php
 if (!function_exists('check_siteinfo')) {
     /**
-     * @param $siteinfo
+     * @param array $siteinfo
      * @return array
      */
     function check_siteinfo($siteinfo)

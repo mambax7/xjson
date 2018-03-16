@@ -50,7 +50,7 @@ function tablesforretrieve($var)
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('json_tables') . ' WHERE allowretrieve = 1 AND visible = 1';
     $ret = $xoopsDB->query($sql);
     $rtn = [];
-    while ($row = $xoopsDB->fetchArray($ret)) {
+    while (false !== ($row = $xoopsDB->fetchArray($ret))) {
         $t++;
         $rtn[$t] = [
             'id'    => $row['tbl_id'],
@@ -66,3 +66,4 @@ function tablesforretrieve($var)
     }
     return $rtn;
 }
+?>

@@ -28,7 +28,7 @@ require_once __DIR__ . '/preloads/autoloader.php';
 
 $modversion['version']       = 1.54;
 $modversion['module_status'] = 'Beta 1';
-$modversion['release_date']  = '2017/08/07';
+$modversion['release_date']  = '2018/03/12';
 $modversion['name']          = 'X-JSON API';
 $modversion['releasedate']   = 'Thusday: 21 April 2011';
 $modversion['status']        = 'Stable';

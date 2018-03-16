@@ -3,7 +3,7 @@ README FIRST
 
 What Can It Do for Me?
 
-You can link with any json compliant system with complete w3c standard wsdl these will be completed in version 4.0 they are more just the abstract data layers of wsdl, they still need a dynamic mime type and other system written into them which the constructs are in place. You can transfer data between any sort tunnel through most of not all firewalls and poll your xoops platform from with another xoops or CMS or even things like .NET, Delphi and many other programming languages.
+You can link with any json compliant system with complete w3c standard WSDL these will be completed in version 4.0 they are more just the abstract data layers of wsdl, they still need a dynamic mime type and other system written into them which the constructs are in place. You can transfer data between any sort tunnel through most of not all firewalls and poll your xoops platform from with another xoops or CMS or even things like .NET, Delphi and many other programming languages.
 
 X-JSON is the quick way for cloud computing API's, you can link your xoops platform with any other computer network with this module, plug-in have complete WSDL compilation code and allow for easy and dynamic deployment.
 

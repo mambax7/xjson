@@ -2,6 +2,7 @@
 
 include_once __DIR__ . '/admin_header.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
+include_once __DIR__ . '/../include/functions.php';
 
 $op = '';
 
@@ -22,17 +23,17 @@ switch ($op) {
         $xoModule      = $moduleHandler->getByDirname('xjson');
 
         xoops_cp_header();
-        adminmenu(5);
+        //adminmenu(5);
         // View Categories permissions
         $item_list_view = [];
         $block_view     = [];
 
         $result_view = $xoopsDB->query('SELECT plugin_id, plugin_name FROM ' . $xoopsDB->prefix('json_plugins') . ' ');
         if ($xoopsDB->getRowsNum($result_view)) {
-            while ($myrow_view = $xoopsDB->fetchArray($result_view)) {
+            while (false !== ($myrow_view = $xoopsDB->fetchArray($result_view))) {
                 $item_list_view['cid']   = $myrow_view['plugin_id'];
                 $item_list_view['title'] = $myrow_view['plugin_name'];
-                $form_view               = new XoopsGroupPermForm('', $xoModule->getVar('mid'), 'plugin_call', "<img id='toptableicon' src="
+                $form_view               = new \XoopsGroupPermForm('', $xoModule->getVar('mid'), 'plugin_call', "<img id='toptableicon' src="
                                                                                                                . XOOPS_URL
                                                                                                                . '/modules/'
                                                                                                                . $xoopsModule->dirname()
@@ -53,7 +54,7 @@ switch ($op) {
                  . '/modules/'
                  . $xoModule->dirname()
                  . "/images/close12.gif alt='' /></a>&nbsp;"
-                 . _XCOAP_PERMISSIONSVIEWMAN
+                 . _XJSON_PERMISSIONSVIEWMAN
                  . "</h3><div id='toptable'><span style=\"color: #567; margin: 3px 0 0 0; font-size: small; display: block; \">"
                  . _XJSON_NOPERMSSET
                  . '</span>';
