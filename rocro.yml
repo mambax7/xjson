@@ -1,0 +1,13 @@
+inspecode:
+  phplint: default
+  misspell: default
+  unused: default
+  grep: default
+  jscpd: default
+  phpcs:
+    options:
+      --exclude: Generic.Files.LineEndings
+      --exclude: Generic.Files.LineLength.TooLong
+      --exclude: PEAR.Commenting.InlineComment.WrongStyle
+      --exclude: PEAR.WhiteSpace.ScopeIndent.IncorrectExact
+      --exclude: PEAR.WhiteSpace.ScopeIndent.IncorrectExact

@@ -104,7 +104,7 @@ function xoops_check_activation($username, $password, $user)
             if ($thisuser->getVar('level') > 0) {
                 $return = ['state' => _US_STATE_ONE, 'action' => 'redirect_header', 'url' => 'user.php', 'opt' => 5, 'text' => _US_ACONTACT, 'set' => false];
             } else {
-                if (false != $memberHandler->activateUser($thisuser)) {
+                if (false !== $memberHandler->activateUser($thisuser)) {
                     $configHandler   = xoops_getHandler('config');
                     $xoopsConfigUser = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
                     if (2 == $xoopsConfigUser['activation_type']) {
