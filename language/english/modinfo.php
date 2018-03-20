@@ -47,4 +47,3 @@ define('_XJSON_SECONDS_30', '30 Seconds');
 
 define('_XJSON_USERANDOMLOCK', 'Random seconds seed (maximum value)');
 define('_XJSON_USERANDOMLOCK_DESC', 'You should not set this above the maximum function lockout time!');
-

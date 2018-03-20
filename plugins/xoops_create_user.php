@@ -4,6 +4,7 @@ include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/authcheck.php';
 include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/siteinfocheck.php';
 include XOOPS_ROOT_PATH . '/class/xoopsmailer.php';
 include XOOPS_ROOT_PATH . '/class/xoopsuser.php';
+//include XOOPS_ROOT_PATH . '/kernel/user.php';
 
 /**
  * @return array
@@ -92,8 +93,8 @@ function xoops_create_user($username, $password, $user, $siteinfo)
         ${$k} = $l;
     }
 
-    include_once XOOPS_ROOT_PATH . '/class/auth/authfactory.php';
-    include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
+    require_once XOOPS_ROOT_PATH . '/class/auth/authfactory.php';
+    require_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
     $xoopsAuth =& XoopsAuthFactory::getAuthConnection($uname);
 
     if (true === check_auth_class($xoopsAuth)) {

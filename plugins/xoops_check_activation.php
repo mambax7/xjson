@@ -78,8 +78,8 @@ function xoops_check_activation($username, $password, $user)
 
     $siteinfo = check_siteinfo($siteinfo);
 
-    include_once XOOPS_ROOT_PATH . '/class/auth/authfactory.php';
-    include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
+    require_once XOOPS_ROOT_PATH . '/class/auth/authfactory.php';
+    require_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
     $xoopsAuth =& XoopsAuthFactory::getAuthConnection(addslashes($uname));
 
     if (true === check_auth_class($xoopsAuth)) {

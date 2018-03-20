@@ -3,8 +3,8 @@
 use XoopsModules\Xjson;
 
 include __DIR__ . '/admin_header.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-include_once __DIR__ . '/../include/functions.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+require_once __DIR__ . '/../include/functions.php';
 
 error_reporting(E_ALL);
 global $xoopsDB;

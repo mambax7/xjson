@@ -32,4 +32,3 @@ function object2array($object)
         echo '</div></td></tr>';
         echo '</table>';
     }
-

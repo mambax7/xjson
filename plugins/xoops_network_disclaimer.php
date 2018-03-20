@@ -49,8 +49,8 @@ function xoops_network_disclaimer($username, $password)
         }
     }
 
-    include_once XOOPS_ROOT_PATH . '/class/auth/authfactory.php';
-    include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
+    require_once XOOPS_ROOT_PATH . '/class/auth/authfactory.php';
+    require_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
     $xoopsAuth = XoopsAuthFactory::getAuthConnection();
 
     if (true === check_auth_class($xoopsAuth)) {

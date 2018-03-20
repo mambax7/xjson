@@ -1,6 +1,7 @@
 <?php
 
 use XoopsModules\Xjson;
+
 /**
  * @param $objects
  * @return array

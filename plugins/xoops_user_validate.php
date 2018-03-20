@@ -70,8 +70,8 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
             return ['ERRNUM' => 4, 'ERRTXT' => 'No Passhash'];
         }
 
-        include_once XOOPS_ROOT_PATH . '/class/auth/authfactory.php';
-        include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
+        require_once XOOPS_ROOT_PATH . '/class/auth/authfactory.php';
+        require_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
         $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($validate['uname']));
 
         if (true === check_auth_class($xoopsAuth)) {

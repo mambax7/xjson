@@ -16,9 +16,9 @@ error_reporting(E_ALL);
 //include __DIR__ . '/../include/functions.php';
 require_once __DIR__ . '/../../../include/cp_header.php';
 
-include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
 /** @var Xjson\Helper $helper */
 $helper = Xjson\Helper::getInstance();
