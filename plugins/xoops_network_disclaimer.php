@@ -1,4 +1,9 @@
 <?php
+
+use XoopsModules\Xjson;
+/** @var Xjson\Helper $helper */
+$helper = Xjson\Helper::getInstance();
+
 include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/authcheck.php';
 
 /**
@@ -37,9 +42,11 @@ function xoops_network_disclaimer_wsdl_service()
  */
 function xoops_network_disclaimer($username, $password)
 {
-    global $xoopsModuleConfig, $xoopsConfig;
+    global  $xoopsConfig;
+    /** @var Xjson\Helper $helper */
+    $helper = Xjson\Helper::getInstance();
 
-    if (1 == $xoopsModuleConfig['site_user_auth']) {
+    if (1 == $helper->getConfig('site_user_auth')) {
         if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
             return $ret;
         }

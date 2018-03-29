@@ -1,5 +1,9 @@
 <?php
 
+use XoopsModules\Xjson;
+/** @var Xjson\Helper $helper */
+$helper = Xjson\Helper::getInstance();
+
 /**
  * @return array
  */
@@ -56,8 +60,10 @@ function story_wsdl_service()
  */
 function story($username, $password, $story)
 {
-    global $xoopsModuleConfig;
-    if (1 == $xoopsModuleConfig['site_user_auth']) {
+    /** @var Xjson\Helper $helper */
+    $helper = Xjson\Helper::getInstance();
+
+    if (1 == $helper->getConfig('site_user_auth')) {
         if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
             return $ret;
         }
@@ -67,7 +73,7 @@ function story($username, $password, $story)
             return ['ErrNum' => 9, 'ErrDesc' => 'No Permission for plug-in'];
         }
     }
-    global $xoopsModuleConfig, $xoopsDB;
+    global $xoopsDB;
 
     define('NW_MODULE_PATH', $GLOBALS['xoops']->path('/modules/xnews/'));
     require_once $GLOBALS['xoops']->path('/modules/xnews/class/class.newsstory.php');

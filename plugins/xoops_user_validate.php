@@ -1,4 +1,9 @@
 <?php
+
+use XoopsModules\Xjson;
+/** @var Xjson\Helper $helper */
+$helper = Xjson\Helper::getInstance();
+
 include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/usercheck.php';
 include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/authcheck.php';
 
@@ -50,9 +55,11 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
      */
     function xoops_user_validate($username, $password, $validate)
     {
-        global $xoopsModuleConfig, $xoopsConfig;
+        global  $xoopsConfig;
+        /** @var Xjson\Helper $helper */
+        $helper = Xjson\Helper::getInstance();
 
-        if (1 == $xoopsModuleConfig['site_user_auth']) {
+        if (1 == $helper->getConfig('site_user_auth')) {
             if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
                 return $ret;
             }
@@ -91,9 +98,11 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
      */
     function xoops_user_validate($username, $password, $validate)
     {
-        global $xoopsModuleConfig, $xoopsConfig;
+        global  $xoopsConfig;
+        /** @var Xjson\Helper $helper */
+        $helper = Xjson\Helper::getInstance();
 
-        if (1 == $xoopsModuleConfig['site_user_auth']) {
+        if (1 == $helper->getConfig('site_user_auth')) {
             if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
                 return $ret;
             }

@@ -1,4 +1,9 @@
 <?php
+
+use XoopsModules\Xjson;
+/** @var Xjson\Helper $helper */
+$helper = Xjson\Helper::getInstance();
+
 /**
  * @return array
  */
@@ -42,9 +47,10 @@ function retrievecrc_wsdl_service()
  */
 function retrievecrc($var)
 {
-    global $xoopsModuleConfig;
+    /** @var Xjson\Helper $helper */
+    $helper = Xjson\Helper::getInstance();
 
-    if (1 == $xoopsModuleConfig['site_user_auth']) {
+    if (1 == $helper->getConfig('site_user_auth')) {
         if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
             return $ret;
         }
@@ -107,8 +113,8 @@ function retrievecrc($var)
         ];
     }
 
-    global $xoopsModuleConfig;
-    if (1 == $xoopsModuleConfig['site_user_auth']) {
+//    global $xoopsModuleConfig;
+    if (1 == $helper->getConfig('site_user_auth')) {
         if (!validateuser($var['username'], $var['password'])) {
             return false;
         }

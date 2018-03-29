@@ -1,4 +1,9 @@
 <?php
+
+use XoopsModules\Xjson;
+/** @var Xjson\Helper $helper */
+$helper = Xjson\Helper::getInstance();
+
 include XOOPS_ROOT_PATH . '/modules/xjson/plugins/inc/usercheck.php';
 include XOOPS_ROOT_PATH . '/modules/xjson/plugins/inc/authcheck.php';
 include XOOPS_ROOT_PATH . '/modules/xjson/plugins/inc/siteinfocheck.php';
@@ -52,9 +57,11 @@ function xoops_check_activation_wsdl_service()
  */
 function xoops_check_activation($username, $password, $user)
 {
-    global $xoopsModuleConfig, $xoopsConfig;
+    global  $xoopsConfig;
+    /** @var Xjson\Helper $helper */
+    $helper = Xjson\Helper::getInstance();
 
-    if (1 == $xoopsModuleConfig['site_user_auth']) {
+    if (1 == $helper->getConfig('site_user_auth')) {
         if ($ret = check_for_lock(basename(__FILE__), $username, $password)) {
             return $ret;
         }
