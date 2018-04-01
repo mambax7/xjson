@@ -1,8 +1,6 @@
 <?php
 
 use XoopsModules\Xjson;
-/** @var Xjson\Helper $helper */
-$helper = Xjson\Helper::getInstance();
 
 include XOOPS_ROOT_PATH . '/modules/xjson/plugins/inc/usercheck.php';
 include XOOPS_ROOT_PATH . '/modules/xjson/plugins/inc/authcheck.php';
