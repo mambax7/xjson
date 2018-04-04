@@ -43,7 +43,7 @@ foreach ($funct->getServerExtensions() as $extension) {
     $row = $xoopsDB->fetchArray($ret);
     if (1 == $row['rc']) {
         require_once XOOPS_ROOT_PATH . '/modules/xjson/plugins/' . $extension;
-        $FunctionDefine[] = substr($extension, 0, strlen($extension) - 4);
+        $FunctionDefine[] = substr($extension, 0, -4);
     }
 }
 

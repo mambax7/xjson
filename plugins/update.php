@@ -91,7 +91,7 @@ function update($var)
                 return false;
             }
         }
-        return $xoopsDB->queryF($sql . substr($sql_b, 0, strlen($sql_b) - 1) . $sql_c);
+        return $xoopsDB->queryF($sql . substr($sql_b, 0, -1) . $sql_c);
     }
 }
 ?>
