@@ -355,7 +355,7 @@ function check_for_lock($function_file, $username, $password)
  */
 function mark_for_lock($function_file, $username, $password)
 {
-    xoops_load('cache');
+    xoops_load('xoopscache');
     $userip = xoops_getUserIP();
     $result = [];
     if ($result = XoopsCache::read('lock_' . $function_file . '_' . $username)) {
