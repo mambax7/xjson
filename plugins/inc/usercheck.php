@@ -25,7 +25,7 @@ if (!defined('usercheck_inc')) {
          */
         function userCheck($uname, $email, $pass, $vpass)
         {
-            return XoopsUserUtility::validate($uname, $email, $pass, $vpass);
+            return \XoopsUserUtility::validate($uname, $email, $pass, $vpass);
         }
     } else {
         /**

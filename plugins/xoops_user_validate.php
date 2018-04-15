@@ -1,8 +1,6 @@
 <?php
 
 use XoopsModules\Xjson;
-/** @var Xjson\Helper $helper */
-$helper = Xjson\Helper::getInstance();
 
 include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/usercheck.php';
 include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/authcheck.php';
@@ -85,7 +83,7 @@ if ($ret[0] >= 2 && $ret[1] >= 3) {
             $result = $xoopsAuth->validate($validate['uname'], $validate['email'], $validate['pass'], $validate['vpass']);
             return $result;
         } else {
-            return ['ERRNUM' => 1, 'RESULT' => XoopsUserUtility::validate($validate['uname'], $validate['email'], $validate['pass'], $validate['vpass'])];
+            return ['ERRNUM' => 1, 'RESULT' => \XoopsUserUtility::validate($validate['uname'], $validate['email'], $validate['pass'], $validate['vpass'])];
         }
     }
 } else { // LEGACY SUPPORT

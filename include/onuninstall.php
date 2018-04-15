@@ -32,20 +32,16 @@ function xoops_module_pre_uninstall_xjson(\XoopsModule $module)
  */
 function xoops_module_uninstall_xjson(\XoopsModule $module)
 {
-//    return true;
+    //    return true;
 
     $moduleDirName = basename(dirname(__DIR__));
-     $helper      =XXX\Helper::getInstance();
+    $helper        = Xjson\Helper::getInstance();
 
-    /** @var Xjson\Utility $utility */
-    $utility     = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($utility)) {
-        xoops_load('utility', $moduleDirName);
-    }
+    /** @var \XoopsModules\Xjson\Utility $utility */
+    $utility = new \XoopsModules\Xjson\Utility();
 
     $success = true;
     $helper->loadLanguage('admin');
-
 
     //------------------------------------------------------------------
     // Remove uploads folder (and all subfolders) if they exist

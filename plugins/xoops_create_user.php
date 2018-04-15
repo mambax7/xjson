@@ -1,8 +1,6 @@
 <?php
 
 use XoopsModules\Xjson;
-/** @var Xjson\Helper $helper */
-$helper = Xjson\Helper::getInstance();
 
 include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/usercheck.php';
 include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/authcheck.php';
@@ -10,6 +8,9 @@ include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/siteinfocheck.php';
 include XOOPS_ROOT_PATH . '/class/xoopsmailer.php';
 include XOOPS_ROOT_PATH . '/class/xoopsuser.php';
 //include XOOPS_ROOT_PATH . '/kernel/user.php';
+
+/** @var Xjson\Helper $helper */
+$helper = Xjson\Helper::getInstance();
 
 /**
  * @return array

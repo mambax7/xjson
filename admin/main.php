@@ -1,12 +1,13 @@
 <?php
 
 use XoopsModules\Xjson;
-/** @var Xjson\Helper $helper */
-$helper = Xjson\Helper::getInstance();
 
 include __DIR__ . '/admin_header.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-require_once __DIR__ . '/../include/functions.php';
+require_once  dirname(__DIR__) . '/include/functions.php';
+
+/** @var Xjson\Helper $helper */
+$helper = Xjson\Helper::getInstance();
 
 error_reporting(E_ALL);
 global $xoopsDB;
@@ -410,7 +411,7 @@ switch ($op) {
         /** @var Xjson\Helper $helper */
         $helper = Xjson\Helper::getInstance();
 
-        // require_once __DIR__ . '/../class/class.functions.php';
+        // require_once  dirname(__DIR__) . '/class/class.functions.php';
     $temp = null !==($helper->getConfig('wsdl')) ?: null;
         $funct = new Xjson\FunctionsHandler($temp);
 

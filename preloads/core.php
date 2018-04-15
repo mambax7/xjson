@@ -20,7 +20,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /**
  * Class XjsonCorePreload
  */
-class XjsonCorePreload extends XoopsPreloadItem
+class XjsonCorePreload extends \XoopsPreloadItem
 {
     // to add PSR-4 autoloader
     /**

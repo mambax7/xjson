@@ -7,7 +7,7 @@
 
 use XoopsModules\Xjson;
 
-include __DIR__ . '/../preloads/autoloader.php';
+include  dirname(__DIR__) . '/preloads/autoloader.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 $moduleDirNameUpper   = strtoupper($moduleDirName); //$capsDirName
@@ -165,12 +165,12 @@ function checkright($function_file, $username, $password)
         $onlineHandler->write($uid, $username, time(), $modid, (string)$_SERVER['REMOTE_ADDR']);
         $memberHandler = xoops_getHandler('member');
         @ini_set('session.gc_maxlifetime', $xoopsConfig['session_expire'] * 60);
-        session_set_saveHandler([&$sessHandler, 'open'], [&$sessHandler, 'close'], [&$sessHandler, 'read'], [&$sessHandler, 'write'], [&$sessHandler, 'destroy'], [&$sessHandler, 'gc']);
+        session_set_saveHandler([&$sess_handler, 'open'], [&$sess_handler, 'close'], [&$sess_handler, 'read'], [&$sess_handler, 'write'], [&$sess_handler, 'destroy'], [&$sess_handler, 'gc']);
         session_start();
         $_SESSION['xoopsUserId']     = $uid;
         $GLOBALS['xoopsUser']        = $memberHandler->getUser($uid);
         $_SESSION['xoopsUserGroups'] = $GLOBALS['xoopsUser']->getGroups();
-        $GLOBALS['sessHandler']->update_cookie();
+        $GLOBALS['sess_handler']->update_cookie();
 
         return $grouppermHandler->checkRight('plugin_call', $item_id, $groups, $modid);
     } else {

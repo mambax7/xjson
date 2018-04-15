@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../../mainfile.php';
+include  dirname(dirname(__DIR__)) . '/mainfile.php';
 if (empty($_POST) && empty($_GET)) {
     header('Location: ' . XOOPS_URL);
     exit;
