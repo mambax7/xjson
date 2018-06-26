@@ -11,9 +11,9 @@
 use XoopsModules\Xjson;
 
 error_reporting(E_ALL);
-//include  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
-//include  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-//include  dirname(__DIR__) . '/include/functions.php';
+//require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+//require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+//require_once dirname(__DIR__) . '/include/functions.php';
 require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 require_once XOOPS_ROOT_PATH . '/class/xoopstree.php';

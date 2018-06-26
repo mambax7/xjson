@@ -9,9 +9,9 @@ class FunctionsHandler
 
     /**
      * FunctionsHandler constructor.
-     * @param $wsdl
+     * @param null|string $wsdl
      */
-    public function __construct($wsdl)
+    public function __construct($wsdl = null)
     {
     }
 

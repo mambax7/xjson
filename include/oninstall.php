@@ -31,7 +31,7 @@ use XoopsModules\Xjson\Common;
  */
 function xoops_module_pre_install_xjson(\XoopsModule $module)
 {
-    include  dirname(__DIR__) . '/preloads/autoloader.php';
+    require_once dirname(__DIR__) . '/preloads/autoloader.php';
     /** @var Xjson\Utility $utility */
     $utility = new Xjson\Utility();
     $xoopsSuccess = $utility::checkVerXoops($module);
@@ -60,7 +60,7 @@ function xoops_module_install_xjson(\XoopsModule $module)
     require_once   dirname(__DIR__) . '/include/config.php';
 
     $moduleDirName = basename(dirname(__DIR__));
-
+    /** @var Xjson\Helper $helper */
     $helper       = Xjson\Helper::getInstance();
     $utility      = new Xjson\Utility();
     $configurator = new Xjson\Common\Configurator();

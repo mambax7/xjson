@@ -2,8 +2,8 @@
 
 use XoopsModules\Xjson;
 
-include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/usercheck.php';
-include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/authcheck.php';
+require_once XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/usercheck.php';
+require_once XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/authcheck.php';
 
 /**
  * @return array

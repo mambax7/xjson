@@ -4,6 +4,7 @@ use XoopsModules\Xjson;
 
 // require_once  dirname(__DIR__) . '/class/Helper.php';
 //require_once  dirname(__DIR__) . '/include/common.php';
+/** @var Xjson\Helper $helper */
 $helper = Xjson\Helper::getInstance();
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');

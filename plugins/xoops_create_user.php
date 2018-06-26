@@ -2,12 +2,12 @@
 
 use XoopsModules\Xjson;
 
-include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/usercheck.php';
-include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/authcheck.php';
-include XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/siteinfocheck.php';
-include XOOPS_ROOT_PATH . '/class/xoopsmailer.php';
-include XOOPS_ROOT_PATH . '/class/xoopsuser.php';
-//include XOOPS_ROOT_PATH . '/kernel/user.php';
+require_once XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/usercheck.php';
+require_once XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/authcheck.php';
+require_once XOOPS_ROOT_PATH . '/modules/xcurl/plugins/inc/siteinfocheck.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsmailer.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsuser.php';
+//require_once XOOPS_ROOT_PATH . '/kernel/user.php';
 
 /** @var Xjson\Helper $helper */
 $helper = Xjson\Helper::getInstance();
@@ -152,7 +152,7 @@ function xoops_create_user($username, $password, $user, $siteinfo)
                 }
                 // Sending notification email to user for self activation
                 if (0 == $xoopsConfigUser['activation_type']) {
-                    $xoopsMailer =& xoops_getMailer();
+                    $xoopsMailer = xoops_getMailer();
                     $xoopsMailer->useMail();
                     $xoopsMailer->setTemplate('register.tpl');
                     $xoopsMailer->assign('SITENAME', $siteinfo['sitename']);
@@ -169,7 +169,7 @@ function xoops_create_user($username, $password, $user, $siteinfo)
                     }
                     // Sending notification email to administrator for activation
                 } elseif (2 == $xoopsConfigUser['activation_type']) {
-                    $xoopsMailer =& xoops_getMailer();
+                    $xoopsMailer = xoops_getMailer();
                     $xoopsMailer->useMail();
                     $xoopsMailer->setTemplate('adminactivate.tpl');
                     $xoopsMailer->assign('USERNAME', $uname);
@@ -195,7 +195,7 @@ function xoops_create_user($username, $password, $user, $siteinfo)
                 }
             }
             if (1 == $xoopsConfigUser['new_user_notify'] && !empty($xoopsConfigUser['new_user_notify_group'])) {
-                $xoopsMailer =& xoops_getMailer();
+                $xoopsMailer = xoops_getMailer();
                 $xoopsMailer->useMail();
                 $memberHandler = xoops_getHandler('member');
                 $xoopsMailer->setToGroups($memberHandler->getGroup($xoopsConfigUser['new_user_notify_group']));
@@ -228,7 +228,7 @@ function xoops_create_user($username, $password, $user, $siteinfo)
             $data = curl_exec($ch);
             curl_close($ch);
 
-            if (strpos(strtolower($data), 'solve puzzel') > 0) {
+            if (stripos($data, 'solve puzzel') > 0) {
                 $sc     = new soapclient(null, ['location' => XORTIFY_API_URI, 'uri' => XORTIFY_API_URI]);
                 $result = $sc->__soapCall('xoops_create_user', [
                     'username' => $username,

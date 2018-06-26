@@ -33,7 +33,7 @@ if (!function_exists('json_encode')) {
     $json = new Services_JSON();
 }
 
-$funct = new Xjson\FunctionsHandler();
+$funct = new \XoopsModules\Xjson\FunctionsHandler();
 
 $FunctionDefine = [];
 foreach ($funct->getServerExtensions() as $extension) {

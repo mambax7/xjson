@@ -3,9 +3,9 @@ if (!defined('usercheck_inc')) {
     global $xoopsConfig;
 
     if (file_exists(XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/user.php')) {
-        include XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/user.php';
+        require_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/user.php';
     } else {
-        include XOOPS_ROOT_PATH . '/language/english/user.php';
+        require_once XOOPS_ROOT_PATH . '/language/english/user.php';
     }
 
     define('usercheck_inc', true);

@@ -2,7 +2,6 @@
 
 use XoopsModules\Xjson;
 
-
 /**
  * @return array
  */
@@ -74,6 +73,7 @@ function retrievecrc($var)
     $ret = $xoopsDB->query($sql);
     $sql = 'SELECT ';
     $tmp = [];
+    $t = 0;
     while (false !== ($row = $xoopsDB->fetchArray($ret))) {
         $sql   .= '`' . $row['fieldname'] . '`';
         $tmp[] = $row['fieldname'];
@@ -96,6 +96,7 @@ function retrievecrc($var)
 
     $ret = $xoopsDB->query($sql);
     $rtn = [];
+    $id = 0;
 
     while (false !== ($row = $xoopsDB->fetchArray($ret))) {
         $id++;

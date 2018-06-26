@@ -35,6 +35,7 @@ function xoops_module_uninstall_xjson(\XoopsModule $module)
     //    return true;
 
     $moduleDirName = basename(dirname(__DIR__));
+    /** @var Xjson\Helper $helper */
     $helper        = Xjson\Helper::getInstance();
 
     /** @var \XoopsModules\Xjson\Utility $utility */

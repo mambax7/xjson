@@ -2,9 +2,9 @@
 
 use XoopsModules\Xjson;
 
-include XOOPS_ROOT_PATH . '/modules/xjson/plugins/inc/usercheck.php';
-include XOOPS_ROOT_PATH . '/modules/xjson/plugins/inc/authcheck.php';
-include XOOPS_ROOT_PATH . '/modules/xjson/plugins/inc/siteinfocheck.php';
+require_once XOOPS_ROOT_PATH . '/modules/xjson/plugins/inc/usercheck.php';
+require_once XOOPS_ROOT_PATH . '/modules/xjson/plugins/inc/authcheck.php';
+require_once XOOPS_ROOT_PATH . '/modules/xjson/plugins/inc/siteinfocheck.php';
 
 /**
  * @return array
@@ -114,7 +114,7 @@ function xoops_check_activation($username, $password, $user)
                     $xoopsConfigUser = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
                     if (2 == $xoopsConfigUser['activation_type']) {
                         $myts        = \MyTextSanitizer::getInstance();
-                        $xoopsMailer =& xoops_getMailer();
+                        $xoopsMailer = xoops_getMailer();
                         $xoopsMailer->useMail();
                         $xoopsMailer->setTemplate('activated.tpl');
                         $xoopsMailer->assign('SITENAME', $siteinfo['sitename']);

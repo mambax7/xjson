@@ -2,7 +2,6 @@
 
 use XoopsModules\Xjson;
 
-
 /**
  * @return array
  */

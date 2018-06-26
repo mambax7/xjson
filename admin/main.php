@@ -2,7 +2,7 @@
 
 use XoopsModules\Xjson;
 
-include __DIR__ . '/admin_header.php';
+require_once __DIR__   . '/admin_header.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once  dirname(__DIR__) . '/include/functions.php';
 
@@ -412,7 +412,7 @@ switch ($op) {
         $helper = Xjson\Helper::getInstance();
 
         // require_once  dirname(__DIR__) . '/class/class.functions.php';
-    $temp = null !==($helper->getConfig('wsdl')) ?: null;
+    $temp = null !== $helper->getConfig('wsdl') ?: null;
         $funct = new Xjson\FunctionsHandler($temp);
 
         $FunctionDefine = [];
